@@ -220,16 +220,16 @@
                         <p class="text-gray-200 text-sm mb-4">
                             A Flutter app delivering "Did You Know" facts across categories, designed with a Retro-Neobrutalism aesthetic.
                         </p>
-                        <a href="#" class="inline-block text-sm font-medium text-green-500 hover:text-green-600" onclick="openModal()">
+                        <a href="#" class="inline-block text-sm font-medium text-green-500 hover:text-green-600" onclick="openModal('RandomModal')">
                             Learn More &rarr;
                         </a>
                     </div>
                 </div>
 
-                <!-- Modal Structure -->
-                <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+                <!-- Random App Modal -->
+                <div id="RandomModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
                     <div class="bg-gray-800 rounded-lg shadow-lg max-w-md w-full p-6 relative">
-                        <button onclick="closeModal()" class="absolute top-3 right-3 text-red-400 hover:text-red-900 text-3xl">
+                        <button onclick="closeModal('RandomModal')" class="absolute top-3 right-3 text-red-400 hover:text-red-900 text-3xl">
                             &times;
                         </button>
                         <h2 class="text-2xl font-semibold text-gray-100 mb-4"> The Random App </h2>
@@ -242,6 +242,9 @@
                         </ul>
                     </div>
                 </div>
+
+
+
                 <!-- Comic App -->
                 <div class="group relative bg-gradient-to-br from-gray-900  rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300">
                     <img src="images/comic.jpg" alt="Comic App" class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110">
@@ -255,11 +258,10 @@
                         </a>
                     </div>
                 </div>
-
                 <!-- Modal Structure -->
                 <div id="ComicModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
                     <div class="bg-gray-800 rounded-lg shadow-lg max-w-md w-full p-6 relative">
-                        <button onclick="closeModal()" class="absolute top-3 right-3 text-red-400 hover:text-red-900 text-3xl">
+                        <button onclick="closeModal('ComicModal')" class="absolute top-3 right-3 text-red-400 hover:text-red-900 text-3xl">
                             &times;
                         </button>
                         <h2 class="text-2xl font-semibold text-gray-100 mb-4"> The Comic App </h2>
@@ -504,20 +506,19 @@
         });
 
         // modal
-        function openModal() {
-            document.getElementById('modal').classList.remove('hidden');
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
         }
 
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
-
-        function openModal() {
-            document.getElementById('ComicModal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('ComicModal').classList.add('hidden');
+        // Close the modal with the given ID
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
         }
          
     </script>
