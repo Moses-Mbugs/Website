@@ -6,6 +6,7 @@
     <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
 
     <title>Moses Mbugua</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="./assets/tailwind.css" rel="stylesheet">
     <style>
@@ -69,7 +70,17 @@
                 <p class="text-gray-300 leading-relaxed">
                     I specialize in crafting responsive, user-friendly interfaces using modern technologies like React and Tailwind CSS.
                 </p>
+                <!-- Badges Section -->
+                <div class="flex flex-wrap justify-center gap-2 mt-4">
+                    <span class="bg-green-700 text-white text-sm font-medium py-1 px-3 rounded ">Tailwind</span>
+                    <span class="bg-green-700 text-white text-sm font-medium py-1 px-3 rounded ">React</span>
+                    <span class="bg-green-700 text-white text-sm font-medium py-1 px-3 rounded ">Rive</span>
+                    <span class="bg-green-700 text-white text-sm font-medium py-1 px-3 rounded ">Javascript</span>
+                    <span class="bg-green-700 text-white text-sm font-medium py-1 px-3 rounded ">HTML and CSS</span>
+                </div>
             </div>
+
+
             <!-- Back-End Development Card -->
             <div class="bg-gray-800 border border-gray-700 shadow-lg rounded-lg p-8 text-center transform hover:scale-105 transition-transform duration-300">
                 <div class="text-blue-400 text-5xl mb-6">
@@ -79,7 +90,16 @@
                 <p class="text-gray-300 leading-relaxed">
                     I build robust server-side solutions with frameworks like Node.js and Laravel, ensuring high performance and scalability.
                 </p>
+                <!-- Badges Section -->
+                <div class="flex flex-wrap justify-center gap-2 mt-4">
+                    <span class="bg-blue-700 text-white text-sm font-medium py-1 px-3 rounded ">PhP Laravel</span>
+                    <span class="bg-blue-700 text-white text-sm font-medium py-1 px-3 rounded ">Node.js</span>
+                    <span class="bg-blue-700 text-white text-sm font-medium py-1 px-3 rounded ">MySQL</span>
+                    <span class="bg-blue-700 text-white text-sm font-medium py-1 px-3 rounded ">Firebase</span>
+                    <span class="bg-blue-700 text-white text-sm font-medium py-1 px-3 rounded ">Supabase</span>
+                </div>
             </div>
+
             <!-- Mobile App Development Card -->
             <div class="bg-gray-800 border border-gray-700 shadow-lg rounded-lg p-8 text-center transform hover:scale-105 transition-transform duration-300">
                 <div class="text-yellow-400 text-5xl mb-6">
@@ -89,6 +109,11 @@
                 <p class="text-gray-300 leading-relaxed">
                     I create seamless mobile applications with Flutter and Kotlin to deliver smooth, user-friendly experiences.
                 </p>
+                <!-- Badges Section -->
+                <div class="flex flex-wrap justify-center gap-2 mt-4">
+                    <span class="bg-yellow-800 text-white text-sm font-medium py-1 px-3 rounded ">Kotlin</span>
+                    <span class="bg-yellow-800 text-white text-sm font-medium py-1 px-3 rounded ">Flutter-Dart</span>
+                </div>
             </div>
         </div>
         <!-- Icons Section -->
@@ -97,7 +122,6 @@
             <i class="fab fa-laravel text-4xl text-red-500"></i>
             <i class="fab fa-js text-4xl text-yellow-400"></i>
             <i class="fab fa-node text-4xl text-green-500"></i>
-            <i class="fab fa-flutter text-4xl text-blue-400"></i>
         </div>
     </section>
     
@@ -188,20 +212,36 @@
                     </div>
                 </div>
     
-                <!-- Random App -->
-                <div class="group relative bg-gradient-to-br from-gray-900  rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300">
+                <!-- Random App Card -->
+                <div class="group relative bg-gradient-to-br from-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300">
                     <img src="images/random.jpg" alt="Random App" class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="p-6">
                         <h3 class="text-lg font-semibold text-gray-100 mb-2">The Random App</h3>
                         <p class="text-gray-200 text-sm mb-4">
                             A Flutter app delivering "Did You Know" facts across categories, designed with a Retro-Neobrutalism aesthetic.
                         </p>
-                        <a href="#" class="inline-block text-sm font-medium text-green-500 hover:text-green-600">
+                        <a href="#" class="inline-block text-sm font-medium text-green-500 hover:text-green-600" onclick="openModal()">
                             Learn More &rarr;
                         </a>
                     </div>
                 </div>
-    
+
+                <!-- Modal Structure -->
+                <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+                    <div class="bg-gray-800 rounded-lg shadow-lg max-w-md w-full p-6 relative">
+                        <button onclick="closeModal()" class="absolute top-3 right-3 text-red-400 hover:text-red-900 text-3xl">
+                            &times;
+                        </button>
+                        <h2 class="text-2xl font-semibold text-gray-100 mb-4"> The Random App </h2>
+                        <p class="text-gray-200 mb-4">
+                            "The Random App" is a Flutter-based application designed to deliver "Did You Know" facts across various categories. The app's visual design leverages Rive to achieve a unique Retro-Neobrutalism aesthetic. It will be supported by a custom dataset of random facts that I am curating.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-300">
+                            <li>Built with Flutter and Dart</li>
+                            <li>Integrated Supabase for backend support</li>
+                        </ul>
+                    </div>
+                </div>
                 <!-- Comic App -->
                 <div class="group relative bg-gradient-to-br from-gray-900  rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300">
                     <img src="images/comic.jpg" alt="Comic App" class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110">
@@ -210,11 +250,29 @@
                         <p class="text-gray-100 text-sm mb-4">
                             An app for comic and book enthusiasts to discover both free and paid titles.
                         </p>
-                        <a href="#" class="inline-block text-sm font-medium text-green-500 hover:text-green-600">
+                        <a href="#" class="inline-block text-sm font-medium text-green-500 hover:text-green-600" onclick="openModal('ComicModal')">
                             Get the Book &rarr;
                         </a>
                     </div>
                 </div>
+
+                <!-- Modal Structure -->
+                <div id="ComicModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+                    <div class="bg-gray-800 rounded-lg shadow-lg max-w-md w-full p-6 relative">
+                        <button onclick="closeModal()" class="absolute top-3 right-3 text-red-400 hover:text-red-900 text-3xl">
+                            &times;
+                        </button>
+                        <h2 class="text-2xl font-semibold text-gray-100 mb-4"> The Comic App </h2>
+                        <p class="text-gray-200 mb-4">
+                            "The Comic App" is a Flutter-based platform dedicated to showcasing the artistic talent of Kenyan creators. Its primary goal is to highlight the unique stories and creativity of local artists, providing them with a space to share their work with a broader audience.    
+                        </p>
+                        <ul class="list-disc list-inside text-gray-300">
+                            <li>Coming soon</li>
+                            
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -445,11 +503,23 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // swirl effect
+        // modal
+        function openModal() {
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        function openModal() {
+            document.getElementById('ComicModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('ComicModal').classList.add('hidden');
+        }
          
-
-
-    
     </script>
 </body>
 </html>
