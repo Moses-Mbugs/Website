@@ -4,846 +4,1153 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Moses Mbugua - Full Stack Developer</title>
+  <title>Moses Mbugua — Full Stack Developer</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap"
     rel="stylesheet" />
+  <link rel="icon" href="images/favicon.ico" />
   <style>
+    :root {
+      --em: #10b981;
+      --em-dim: rgba(16, 185, 129, 0.12);
+      --em-glow: rgba(16, 185, 129, 0.25);
+      --g1: #111111;
+      --g2: #1a1a1a;
+      --g3: #252525;
+      --border: rgba(255, 255, 255, 0.07);
+      --border-h: rgba(16, 185, 129, 0.4);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: "JetBrains Mono", monospace;
+      background: #080808;
+      color: #e4e4e7;
+      font-family: 'JetBrains Mono', monospace;
+      overflow-x: hidden;
     }
 
-    .orbitron {
-      font-family: "JetBrains Mono", monospace;
+    .glass {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      transition: border-color .3s, box-shadow .3s;
     }
 
-    @keyframes float {
+    .glass:hover {
+      border-color: var(--border-h);
+      box-shadow: 0 0 28px var(--em-glow);
+    }
+
+    .font-orb {
+      font-family: 'Orbitron', monospace;
+    }
+
+    .em {
+      color: var(--em);
+    }
+
+    .em-glow {
+      text-shadow: 0 0 18px rgba(16, 185, 129, .45);
+    }
+
+    .hud {
+      position: relative;
+    }
+
+    .hud::before,
+    .hud::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: var(--em);
+      border-style: solid;
+      opacity: .5;
+    }
+
+    .hud::before {
+      top: 0;
+      left: 0;
+      border-width: 1px 0 0 1px;
+    }
+
+    .hud::after {
+      bottom: 0;
+      right: 0;
+      border-width: 0 1px 1px 0;
+    }
+
+    @keyframes blink {
 
       0%,
       100% {
-        transform: translateY(0px);
+        opacity: 1
       }
 
       50% {
-        transform: translateY(-10px);
+        opacity: 0
       }
     }
 
-    .float-animation {
-      animation: float 3s ease-in-out infinite;
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--em);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
     }
 
-    @keyframes gradient-shift {
+    .grid-bg {
+      background-image: linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    .stat-num {
+      font-family: 'Orbitron', monospace;
+      color: var(--em);
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-shadow: 0 0 14px rgba(16, 185, 129, .4);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 270px;
+      gap: 12px;
+      max-width: 1080px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    @media(max-width:900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bento-sm {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .phone-frame {
+      width: 220px;
+      height: 440px;
+      border-radius: 30px;
+      border: 2px solid #2a2a2a;
+      background: #090909;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, .04), 0 24px 60px rgba(0, 0, 0, .7), 0 0 28px rgba(16, 185, 129, .1);
+    }
+
+    .phone-frame::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 52px;
+      height: 4px;
+      background: #1e1e1e;
+      border-radius: 2px;
+      z-index: 10;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: .68rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid;
+    }
+
+    .tag-em {
+      background: rgba(16, 185, 129, .08);
+      border-color: rgba(16, 185, 129, .25);
+      color: var(--em);
+    }
+
+    .tag-blue {
+      background: rgba(96, 165, 250, .08);
+      border-color: rgba(96, 165, 250, .25);
+      color: #60a5fa;
+    }
+
+    .tag-pur {
+      background: rgba(167, 139, 250, .08);
+      border-color: rgba(167, 139, 250, .25);
+      color: #a78bfa;
+    }
+
+    .tag-yel {
+      background: rgba(251, 191, 36, .08);
+      border-color: rgba(251, 191, 36, .25);
+      color: #fbbf24;
+    }
+
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #080808;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--em);
+      border-radius: 2px;
+    }
+
+    /* ── SPACE JOURNEY ── */
+    #experience {
+      background: #000;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #spaceCanvas {
+      position: relative;
+      width: 100%;
+      height: 68vh;
+      min-height: 520px;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(1);
+        opacity: .7
+      }
+
+      100% {
+        transform: scale(1.5);
+        opacity: 0
+      }
+    }
+
+    @keyframes planet-float-0 {
 
       0%,
       100% {
-        background-position: 0% 50%;
+        transform: translate(-50%, -50%) translate(0, 0)
       }
 
       50% {
-        background-position: 100% 50%;
+        transform: translate(-50%, -50%) translate(3px, -5px)
       }
     }
 
-    .gradient-animate {
-      background-size: 200% 200%;
-      animation: gradient-shift 8s ease infinite;
+    @keyframes planet-float-1 {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) translate(0, 0)
+      }
+
+      50% {
+        transform: translate(-50%, -50%) translate(-4px, 5px)
+      }
+    }
+
+    @keyframes planet-float-2 {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) translate(0, 0)
+      }
+
+      50% {
+        transform: translate(-50%, -50%) translate(4px, 3px)
+      }
+    }
+
+    @keyframes planet-float-3 {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) translate(0, 0)
+      }
+
+      50% {
+        transform: translate(-50%, -50%) translate(-3px, -5px)
+      }
+    }
+
+    @keyframes planet-float-4 {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) translate(0, 0)
+      }
+
+      50% {
+        transform: translate(-50%, -50%) translate(5px, -3px)
+      }
+    }
+
+    .planet-container {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .planet-container:nth-child(1) {
+      animation: planet-float-0 10s ease-in-out infinite;
+    }
+
+    .planet-container:nth-child(2) {
+      animation: planet-float-1 13s ease-in-out infinite;
+    }
+
+    .planet-container:nth-child(3) {
+      animation: planet-float-2 11s ease-in-out infinite;
+    }
+
+    .planet-container:nth-child(4) {
+      animation: planet-float-3 14s ease-in-out infinite;
+    }
+
+    .planet-container:nth-child(5) {
+      animation: planet-float-4 9s ease-in-out infinite;
+    }
+
+    .p-body {
+      border-radius: 50%;
+      transition: transform .3s, filter .3s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .p-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid;
+      pointer-events: none;
+    }
+
+    .p-glow {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none;
+      filter: blur(10px);
+    }
+
+    .planet-container:hover .p-body {
+      transform: scale(1.14);
+      filter: brightness(1.25);
+    }
+
+    .planet-container:hover .p-glow {
+      opacity: 1;
+    }
+
+    .p-label {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    #spaceship {
+      position: absolute;
+      z-index: 8;
+      pointer-events: none;
+      filter: drop-shadow(0 0 8px rgba(16, 185, 129, .65));
+    }
+
+    /* Modal */
+    #planetModal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, .88);
+      backdrop-filter: blur(10px);
+    }
+
+    #modalCard {
+      background: #0f0f0f;
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 560px;
+      width: 90%;
+      position: relative;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    #modalCard::-webkit-scrollbar {
+      width: 2px;
+    }
+
+    #modalCard::-webkit-scrollbar-thumb {
+      background: var(--em);
+    }
+
+    .metric-grid {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .metric-box {
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .metric-val {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .metric-lbl {
+      font-size: .6rem;
+      color: #71717a;
+      margin-top: 3px;
+    }
+
+    .bullet-item {
+      display: flex;
+      gap: 10px;
+      font-size: .78rem;
+      color: #a1a1aa;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .04);
+    }
+
+    .bullet-item:last-child {
+      border-bottom: none;
     }
   </style>
 </head>
 
-<body class="bg-zinc-950 text-white">
-  <header
-    class="fixed top-0 left-0 w-full flex justify-between items-center px-8 py-6 bg-zinc-950/90 backdrop-blur-sm z-50">
-    <a href="#home" class="text-xl font-bold text-green-400 orbitron">MosesMbugua<span
-        class="text-gray-400">._</span></a>
-    <nav class="flex space-x-6 text-sm">
-      <a href="#home" class="hover:text-green-400 transition">// home</a>
-      <a href="#expertise" class="hover:text-green-400 transition">// expertise</a>
-      <a href="#projects" class="hover:text-green-400 transition">// work</a>
-      <a href="#experience" class="hover:text-green-400 transition">// experience</a>
-      <a href="#achievements" class="hover:text-green-400 transition">// achievements</a>
-      <a href="#contact" class="hover:text-green-400 transition">// contact</a>
-    </nav>
+<body>
+
+  <!-- NAV -->
+  <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300"
+    style="background:rgba(8,8,8,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#home" class="font-orb text-base font-bold">
+        <span class="em">Moses</span><span class="text-zinc-500">Mbugua</span><span class="em">._</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-1 text-xs">
+        <a href="#home" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">// home</a>
+        <a href="#expertise" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">//
+          expertise</a>
+        <a href="#projects" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">// work</a>
+        <a href="#experience" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">// journey</a>
+        <a href="#achievements" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">//
+          achievements</a>
+        <a href="#contact" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">// contact</a>
+        <a href="explore.html" class="px-3 py-1.5 rounded transition font-medium text-xs"
+          style="background:var(--em-dim);border:1px solid rgba(16,185,129,.3);color:var(--em);">// explore ↗</a>
+      </nav>
+      <button id="menuBtn" class="md:hidden text-zinc-500 hover:text-white transition"><i
+          class="fas fa-bars"></i></button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-white/5 px-6 py-4 grid grid-cols-2 gap-2 text-xs">
+      <a href="#home" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">// home</a>
+      <a href="#expertise" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">//
+        expertise</a>
+      <a href="#projects" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">// work</a>
+      <a href="#experience" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">//
+        journey</a>
+      <a href="#achievements" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">//
+        achievements</a>
+      <a href="#contact" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">// contact</a>
+      <a href="explore.html" class="px-3 py-2 rounded col-span-2 text-center transition"
+        style="background:var(--em-dim);border:1px solid rgba(16,185,129,.3);color:var(--em);">// explore ↗</a>
+    </div>
   </header>
 
-  <!-- Intro Section -->
-  <main id="home" class="flex flex-col items-center justify-center h-screen text-center pt-20">
-    <div class="relative">
-      <div class="absolute inset-0 bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 blur-2xl opacity-20">
-      </div>
-      <h1 class="text-6xl font-extrabold relative text-green-400 orbitron float-animation">
-        &lt;Hello, World!/&gt;
-      </h1>
-    </div>
-    <h2 class="text-4xl font-bold mt-8">
-      My name is <span class="text-green-400 orbitron">Moses Mbugua</span>
-    </h2>
-    <p class="mt-6 text-xl">
-      I am a <span class="text-green-400 font-semibold" id="typing"></span>
-    </p>
-
-    <!-- Button for Resume -->
-    <a href="assets/Moses_Mbugua_CV.pdf" download
-      class="relative inline-flex items-center justify-center p-0.5 mb-6 mt-6 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-      <span
-        class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-        Download my resume
-      </span>
-    </a>
-
-    <div class="absolute bottom-12 animate-bounce">
-      <a href="#expertise">
-        <div
-          class="w-10 h-10 border-2 border-white rounded-full flex items-center justify-center hover:border-green-400 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-            class="w-6 h-12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
-      </a>
-    </div>
-  </main>
-
-  <!-- Expertise Section -->
-  <section id="expertise"
-    class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-zinc-950 px-6 py-16 text-white">
-    <h2 class="text-5xl font-extrabold mb-12 tracking-wide text-center text-green-500 orbitron">
-      My Expertise
-    </h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-7xl">
-      <!-- Front-End Development Card -->
-      <div
-        class="bg-gray-800 border border-gray-700 shadow-lg rounded-lg p-8 text-center transform hover:scale-105 transition-transform duration-300 hover:border-green-500">
-        <div class="text-green-400 text-5xl mb-6">
-          <i class="fas fa-code"></i>
-        </div>
-        <h3 class="text-xl font-semibold mb-4 orbitron">
-          Front-End Development
-        </h3>
-        <p class="text-gray-300 leading-relaxed">
-          I craft responsive, user-friendly interfaces using React.js,
-          TypeScript, HTML5, and Tailwind CSS with a focus on modern design
-          patterns.
-        </p>
-      </div>
-      <!-- Back-End Development Card -->
-      <div
-        class="bg-gray-800 border border-gray-700 shadow-lg rounded-lg p-8 text-center transform hover:scale-105 transition-transform duration-300 hover:border-blue-500">
-        <div class="text-blue-400 text-4xl mb-6">
-          <i class="fas fa-server"></i>
-        </div>
-        <h3 class="text-xl font-semibold mb-4 orbitron">
-          Back-End Development
-        </h3>
-        <p class="text-gray-300 leading-relaxed">
-          I build robust server-side solutions with Laravel, Django, Spring
-          Boot, and Node.js, ensuring high performance and scalability.
-        </p>
-      </div>
-      <!-- Mobile App Development Card -->
-      <div
-        class="bg-gray-800 border border-gray-700 shadow-lg rounded-lg p-8 text-center transform hover:scale-105 transition-transform duration-300 hover:border-yellow-500">
-        <div class="text-yellow-400 text-4xl mb-6">
-          <i class="fas fa-mobile-alt"></i>
-        </div>
-        <h3 class="text-xl font-semibold mb-4 orbitron">
-          Mobile App Development
-        </h3>
-        <p class="text-gray-300 leading-relaxed">
-          I create seamless mobile applications with Flutter (Dart) and Kotlin
-          to deliver smooth, intuitive experiences across platforms.
-        </p>
-      </div>
-    </div>
-    <!-- Tech Stack Icons -->
-    <div class="mt-16 flex flex-wrap justify-center gap-8 items-center">
-      <i class="fab fa-react text-4xl text-cyan-400 hover:scale-110 transition-transform" title="React.js"></i>
-      <i class="fab fa-laravel text-4xl text-red-500 hover:scale-110 transition-transform" title="Laravel"></i>
-      <i class="fab fa-js text-4xl text-yellow-400 hover:scale-110 transition-transform" title="JavaScript"></i>
-      <i class="fab fa-node text-4xl text-green-500 hover:scale-110 transition-transform" title="Node.js"></i>
-      <i class="fab fa-python text-4xl text-blue-400 hover:scale-110 transition-transform" title="Python/Django"></i>
-      <i class="fab fa-flutter text-4xl text-blue-400 hover:scale-110 transition-transform" title="Flutter"></i>
-      <i class="fab fa-java text-4xl text-red-600 hover:scale-110 transition-transform" title="Java/Spring Boot"></i>
-      <i class="fab fa-aws text-4xl text-orange-400 hover:scale-110 transition-transform" title="AWS"></i>
-    </div>
-  </section>
-
-  <!-- Work Section -->
-  <section id="projects" class="min-h-screen bg-zinc-900 flex flex-col items-center justify-center px-6 py-12">
-    <h2 class="text-4xl font-extrabold text-green-500 mb-16 orbitron text-center">
-      Featured Projects
-    </h2>
-
-    <!-- Mzalendo Project -->
+  <!-- HERO -->
+  <section id="home"
+    class="min-h-screen grid-bg flex items-center justify-center px-6 pt-20 pb-16 relative overflow-hidden">
     <div
-      class="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between space-y-6 lg:space-y-0 lg:space-x-12 max-w-6xl mb-20">
-      <!-- Left Content -->
-      <div class="lg:w-1/2 text-center lg:text-left">
-        <div
-          class="inline-block bg-green-500/10 border border-green-500 rounded-full px-4 py-1 text-green-400 text-xs mb-4">
-          LIVE ON PLAY STORE
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full pointer-events-none"
+      style="background:radial-gradient(ellipse,rgba(16,185,129,.07) 0%,transparent 68%);"></div>
+    <div class="hero-grid w-full">
+      <div class="glass rounded-2xl p-10 hud" id="hero-main">
+        <div class="text-xs text-zinc-600 mb-6 flex items-center gap-2 font-mono">
+          <span class="em">●</span> SYSTEM ONLINE — NAIROBI, KENYA
         </div>
-        <h3 class="text-4xl font-bold text-gray-100 mb-4 orbitron">
-          Mzalendo - Android App
-        </h3>
-        <p class="text-gray-300 mb-6 leading-relaxed">
-          An interactive quiz game built with Kotlin that educates users on
-          Kenyan culture, history, and trivia. Features multiple categories,
-          engaging gameplay, and a humorous take on Kenyan facts.
+        <h1 class="font-orb text-5xl lg:text-[3.6rem] font-black leading-tight">
+          <span class="text-zinc-400">&lt;</span><span class="em em-glow">Hello</span><span
+            class="text-zinc-400">,</span><br>
+          <span class="text-white">World</span><span class="em">/&gt;</span>
+        </h1>
+        <h2 class="mt-5 text-2xl font-bold">
+          <span class="text-zinc-600 text-base font-normal font-mono">init(</span><span
+            class="text-white font-orb">Moses Mbugua</span><span
+            class="text-zinc-600 text-base font-normal font-mono">)</span>
+        </h2>
+        <p class="mt-4 text-zinc-400 flex items-center gap-2 text-sm">
+          <span class="em font-mono">$</span>
+          I am a <span class="em font-semibold ml-1" id="typing"></span><span class="cursor"></span>
         </p>
-        <p class="text-green-400 text-sm italic mb-8 bg-green-500/5 p-3 rounded border-l-4 border-green-500">
-          Achievement: Singlehandedly built, tested, and deployed — now live
-          on Google Play Store
-        </p>
-        <div class="flex gap-4 justify-center lg:justify-start">
-          <a href="https://play.google.com/store/apps/details?id=com.mzalendo.quizapp&hl=en" target="_blank"
-            class="inline-flex items-center bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition transform hover:scale-105">
-            <i class="fab fa-google-play mr-2"></i>
-            Download from Play Store
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="assets/Moses Mbugua - CV.pdf" download
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-sm text-black transition hover:opacity-85"
+            style="background:var(--em);box-shadow:0 0 22px rgba(16,185,129,.28);">
+            <i class="fas fa-download text-xs"></i> Download CV
+          </a>
+          <a href="#contact"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-sm glass text-zinc-300 hover:text-white transition">
+            <i class="fas fa-terminal text-xs em"></i> Contact Me
           </a>
         </div>
       </div>
-
-      <!-- Right Slideshow -->
-      <div class="lg:w-1/2 relative flex justify-center">
-        <div class="relative w-[250px] h-[515px] overflow-hidden rounded-2xl shadow-2xl border-4 border-gray-800">
-          <div class="slideshow relative flex flex-col items-center h-full">
-            <!-- Vertical Images -->
-            <img src="images/mzalendo1.jpg" alt="Screenshot 1"
-              class="absolute w-full h-full object-cover rounded-lg opacity-0 transition-opacity duration-500 ease-in-out" />
-            <img src="images/mzalendo2.jpg" alt="Screenshot 2"
-              class="absolute w-full h-full object-cover rounded-lg opacity-0 transition-opacity duration-500 ease-in-out" />
-            <img src="images/mzalendo3.jpg" alt="Screenshot 3"
-              class="absolute w-full h-full object-cover rounded-lg opacity-0 transition-opacity duration-500 ease-in-out" />
-            <img src="images/mzalendo4.jpg" alt="Screenshot 4"
-              class="absolute w-full h-full object-cover rounded-lg opacity-0 transition-opacity duration-500 ease-in-out" />
-            <img src="images/mzalendo5.jpg" alt="Screenshot 5"
-              class="absolute w-full h-full object-cover rounded-lg opacity-0 transition-opacity duration-500 ease-in-out" />
+      <div class="bento-sm">
+        <div class="glass rounded-xl p-4 flex flex-col justify-between">
+          <div class="text-xs text-zinc-600 font-mono">// location</div>
+          <div>
+            <div class="em text-lg mb-1"><i class="fas fa-map-pin"></i></div>
+            <div class="text-white text-sm font-medium">Nairobi</div>
+            <div class="text-zinc-600 text-xs">Kenya 🇰🇪</div>
           </div>
         </div>
-        <!-- Navigation Buttons -->
-        <button
-          class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-700 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-green-500 transition"
-          id="prev">
-          &#8592;
-        </button>
-        <button
-          class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-700 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-green-500 transition"
-          id="next">
-          &#8594;
-        </button>
+        <div class="glass rounded-xl p-4 flex flex-col justify-between" style="border-color:rgba(16,185,129,.28);">
+          <div class="text-xs text-zinc-600 font-mono">// status</div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="w-2 h-2 rounded-full animate-pulse"
+                style="background:var(--em);display:inline-block;"></span>
+              <span class="em text-xs font-mono">ACTIVE</span>
+            </div>
+            <div class="text-white text-sm">Open to</div>
+            <div class="text-zinc-500 text-xs">Opportunities</div>
+          </div>
+        </div>
+        <div class="glass rounded-xl p-4 flex flex-col justify-between">
+          <div class="text-xs text-zinc-600 font-mono">// exp</div>
+          <div>
+            <div class="stat-num">2+</div>
+            <div class="text-zinc-500 text-xs mt-1">Years<br>Experience</div>
+          </div>
+        </div>
+        <div class="glass rounded-xl p-4 flex flex-col justify-between">
+          <div class="text-xs text-zinc-600 font-mono">// shipped</div>
+          <div>
+            <div class="stat-num">10+</div>
+            <div class="text-zinc-500 text-xs mt-1">Projects<br>Delivered</div>
+          </div>
+        </div>
       </div>
+    </div>
+    <div
+      class="absolute bottom-8 left-1/2 -translate-x-1/2 glass rounded-full px-6 py-2.5 text-xs text-zinc-500 font-mono whitespace-nowrap flex items-center gap-2">
+      <span class="em">@</span>
+      Currently: <span class="text-white ml-1">Software Developer</span>&nbsp;@&nbsp;<span class="em">Ecobank
+        Kenya</span>
     </div>
   </section>
 
-  <!-- Other Projects Section -->
-  <section id="projects2" class="min-h-screen bg-black px-6 py-12 flex flex-col items-center justify-center">
-    <div class="w-full max-w-7xl mx-auto">
-      <h2 class="text-4xl font-extrabold text-green-500 text-center mb-16 orbitron">
-        Other Notable Projects
-      </h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <!-- SkyCast -->
-        <div
-          class="group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300 border border-gray-700 hover:border-blue-500">
-          <img src="images/skycast.jpg" alt="SkyCast"
-            class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110" />
-          <div class="p-6">
-            <div
-              class="inline-block bg-blue-500/10 border border-blue-500 rounded-full px-3 py-1 text-blue-400 text-xs mb-3">
-              Flutter • Dart
-            </div>
-            <h3 class="text-lg font-semibold text-gray-100 mb-2 orbitron">
-              SkyCast
-            </h3>
-            <p class="text-gray-300 text-sm mb-4">
-              Mobile weather app providing real-time updates via
-              OpenWeatherAPI with an intuitive UI.
-            </p>
-            <a href="#" class="inline-block text-sm font-medium text-green-400 hover:text-green-500 transition">
-              Get APK &rarr;
-            </a>
+  <!-- EXPERTISE -->
+  <section id="expertise" class="py-24 px-6" style="background:linear-gradient(180deg,#080808 0%,#0d0d0d 100%);">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-14 gsap-reveal">
+        <p class="em text-xs font-mono mb-2">// 01 — expertise</p>
+        <h2 class="font-orb text-4xl font-bold text-white">What I Build</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="glass rounded-2xl p-8 hud gsap-reveal">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-6"
+            style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);"><i class="fas fa-code em"></i>
           </div>
+          <h3 class="font-orb text-sm font-bold text-white mb-3">Front-End</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed mb-4">Responsive, pixel-perfect interfaces with React.js,
+            TypeScript, and Tailwind CSS.</p>
+          <div class="flex flex-wrap gap-2"><span class="tag tag-em">React</span><span
+              class="tag tag-em">TypeScript</span><span class="tag tag-em">Tailwind</span></div>
         </div>
-
-        <!-- Nairobi Temperatures -->
-        <div
-          class="group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300 border border-gray-700 hover:border-purple-500">
-          <img src="images/temp.jpeg" alt="Nairobi Temperatures"
-            class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110" />
-          <div class="p-6">
-            <div
-              class="inline-block bg-purple-500/10 border border-purple-500 rounded-full px-3 py-1 text-purple-400 text-xs mb-3">
-              Machine Learning • R
-            </div>
-            <h3 class="text-lg font-semibold text-gray-100 mb-2 orbitron">
-              Temperature Prediction
-            </h3>
-            <p class="text-gray-300 text-sm mb-4">
-              ML model trained on 30 years of data to predict Nairobi's
-              temperatures with high accuracy.
-            </p>
-            <a href="https://github.com/Moses-Mbugs/Nairobi-temperature" target="_blank"
-              class="inline-block text-sm font-medium text-green-400 hover:text-green-500 transition">
-              GitHub Link &rarr;
-            </a>
-          </div>
+        <div class="glass rounded-2xl p-8 hud gsap-reveal">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-6"
+            style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);"><i
+              class="fas fa-server text-indigo-400"></i></div>
+          <h3 class="font-orb text-sm font-bold text-white mb-3">Back-End</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed mb-4">Scalable server-side solutions with Laravel, Django,
+            Spring Boot, and Node.js.</p>
+          <div class="flex flex-wrap gap-2"><span class="tag tag-pur">Laravel</span><span
+              class="tag tag-pur">Django</span><span class="tag tag-pur">Node.js</span></div>
         </div>
-
-        <!-- Apprentice -->
-        <div
-          class="group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300 border border-gray-700 hover:border-yellow-500">
-          <div class="w-full h-52 bg-gradient-to-br from-yellow-600 to-orange-600 flex items-center justify-center">
-            <i class="fas fa-user-graduate text-6xl text-white opacity-20"></i>
-          </div>
-          <div class="p-6">
-            <div
-              class="inline-block bg-yellow-500/10 border border-yellow-500 rounded-full px-3 py-1 text-yellow-400 text-xs mb-3">
-              PHP • Laravel
-            </div>
-            <h3 class="text-lg font-semibold text-gray-100 mb-2 orbitron">
-              Apprentice
-            </h3>
-            <p class="text-gray-300 text-sm mb-4">
-              Web platform connecting young IT practitioners with industry
-              experts for mentorship and networking.
-            </p>
-            <a href="#" class="inline-block text-sm font-medium text-green-400 hover:text-green-500 transition">
-              Learn More &rarr;
-            </a>
-          </div>
+        <div class="glass rounded-2xl p-8 hud gsap-reveal">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-6"
+            style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);"><i
+              class="fas fa-mobile-alt text-yellow-400"></i></div>
+          <h3 class="font-orb text-sm font-bold text-white mb-3">Mobile</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed mb-4">Cross-platform apps with Flutter (Dart) and native
+            Android with Kotlin.</p>
+          <div class="flex flex-wrap gap-2"><span class="tag tag-yel">Flutter</span><span
+              class="tag tag-yel">Kotlin</span><span class="tag tag-yel">Dart</span></div>
         </div>
-
-        <!-- Random App -->
-        <div
-          class="group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300 border border-gray-700 hover:border-green-500">
-          <img src="images/random.jpg" alt="Random App"
-            class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110" />
-          <div class="p-6">
-            <div
-              class="inline-block bg-green-500/10 border border-green-500 rounded-full px-3 py-1 text-green-400 text-xs mb-3">
-              Flutter • Design
-            </div>
-            <h3 class="text-lg font-semibold text-gray-100 mb-2 orbitron">
-              The Random App
-            </h3>
-            <p class="text-gray-300 text-sm mb-4">
-              "Did You Know" facts app with Retro-Neobrutalism aesthetic
-              across multiple categories.
-            </p>
-            <a href="#" class="inline-block text-sm font-medium text-green-400 hover:text-green-500 transition">
-              Learn More &rarr;
-            </a>
-          </div>
+      </div>
+      <div class="glass rounded-2xl p-6 gsap-reveal">
+        <p class="text-xs text-zinc-600 font-mono mb-5">// tech_stack.json</p>
+        <div class="flex flex-wrap gap-8 justify-center items-center">
+          <div class="flex flex-col items-center gap-1 group"><i
+              class="fab fa-react text-3xl text-cyan-400 group-hover:scale-110 transition-transform"></i><span
+              class="text-zinc-700 text-xs">React</span></div>
+          <div class="flex flex-col items-center gap-1 group"><i
+              class="fab fa-laravel text-3xl text-red-500 group-hover:scale-110 transition-transform"></i><span
+              class="text-zinc-700 text-xs">Laravel</span></div>
+          <div class="flex flex-col items-center gap-1 group"><i
+              class="fab fa-js text-3xl text-yellow-400 group-hover:scale-110 transition-transform"></i><span
+              class="text-zinc-700 text-xs">JavaScript</span></div>
+          <div class="flex flex-col items-center gap-1 group"><i
+              class="fab fa-node text-3xl text-green-500 group-hover:scale-110 transition-transform"></i><span
+              class="text-zinc-700 text-xs">Node.js</span></div>
+          <div class="flex flex-col items-center gap-1 group"><i
+              class="fab fa-python text-3xl text-blue-400 group-hover:scale-110 transition-transform"></i><span
+              class="text-zinc-700 text-xs">Python</span></div>
+          <div class="flex flex-col items-center gap-1 group"><i
+              class="fab fa-java text-3xl text-red-600 group-hover:scale-110 transition-transform"></i><span
+              class="text-zinc-700 text-xs">Java</span></div>
+          <div class="flex flex-col items-center gap-1 group"><i
+              class="fab fa-aws text-3xl text-orange-400 group-hover:scale-110 transition-transform"></i><span
+              class="text-zinc-700 text-xs">AWS</span></div>
+          <div class="flex flex-col items-center gap-1 group"><i
+              class="fab fa-git-alt text-3xl text-orange-500 group-hover:scale-110 transition-transform"></i><span
+              class="text-zinc-700 text-xs">Git</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Experience Section -->
-  <section id="experience" class="min-h-screen bg-gradient-to-br from-zinc-950 to-gray-900 text-white py-20 px-8">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-5xl font-extrabold text-center text-green-500 mb-16 orbitron">
-        Professional Journey
-      </h2>
-
-      <div class="relative">
-        <!-- Timeline Container -->
-        <div class="space-y-12">
-          <!-- Ecobank Kenya - Current -->
-          <div class="relative pl-8 border-l-4 border-green-500">
-            <div class="absolute -left-3 top-0 w-6 h-6 bg-green-500 rounded-full border-4 border-zinc-950"></div>
-            <div
-              class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 hover:border-green-500 transition">
-              <div class="flex items-center justify-between mb-2">
-                <h3 class="text-2xl font-bold text-green-400 orbitron">
-                  Ecobank Kenya
-                </h3>
-                <span
-                  class="text-sm text-green-400 bg-green-500/10 px-3 py-1 rounded-full border border-green-500">Current</span>
+  <!-- PROJECTS -->
+  <section id="projects" class="py-24 px-6" style="background:#0a0a0a;">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-14 gsap-reveal">
+        <p class="em text-xs font-mono mb-2">// 02 — work</p>
+        <h2 class="font-orb text-4xl font-bold text-white">Featured Projects</h2>
+      </div>
+      <div class="glass rounded-2xl overflow-hidden mb-8 gsap-reveal">
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+          <div class="p-10 flex flex-col justify-center">
+            <span class="tag tag-em mb-5 w-fit"><i class="fab fa-google-play mr-1"></i> LIVE ON PLAY STORE</span>
+            <h3 class="font-orb text-3xl font-bold text-white mb-3">Mzalendo</h3>
+            <p class="text-zinc-500 text-sm leading-relaxed mb-4">An interactive quiz game built with Kotlin that
+              educates users on Kenyan culture, history, and trivia. Multiple categories, engaging gameplay, and a
+              humorous take on Kenyan facts.</p>
+            <p class="text-xs font-mono p-3 rounded-lg mb-6"
+              style="background:rgba(16,185,129,.05);border-left:2px solid var(--em);color:#6ee7b7;">▹ Singlehandedly
+              built, tested, and deployed — 200+ downloads in first 24 hours</p>
+            <div class="flex flex-wrap gap-2 mb-6"><span class="tag tag-em">Kotlin</span><span
+                class="tag tag-em">Android</span><span class="tag tag-em">Play Store</span></div>
+            <a href="https://play.google.com/store/apps/details?id=com.mzalendo.quizapp&hl=en" target="_blank"
+              class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm text-black w-fit transition hover:opacity-85"
+              style="background:var(--em);box-shadow:0 4px 20px rgba(16,185,129,.25);">
+              <i class="fab fa-google-play"></i> Download from Play Store
+            </a>
+          </div>
+          <div class="flex items-center justify-center p-10" style="background:rgba(0,0,0,.25);">
+            <div class="relative">
+              <div class="phone-frame">
+                <div class="slideshow w-full h-full relative">
+                  <img src="images/mzalendo1.jpg" alt="Mzalendo 1"
+                    class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                  <img src="images/mzalendo2.jpg" alt="Mzalendo 2"
+                    class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                  <img src="images/mzalendo3.jpg" alt="Mzalendo 3"
+                    class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                  <img src="images/mzalendo4.jpg" alt="Mzalendo 4"
+                    class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                  <img src="images/mzalendo5.jpg" alt="Mzalendo 5"
+                    class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                </div>
               </div>
-              <p class="text-gray-400 mb-4">
-                Software Developer • Apr 2025 - Present
-              </p>
-              <ul class="text-gray-300 space-y-2 text-sm">
-                <li class="flex items-start">
-                  <span class="text-green-400 mr-2">▹</span>
-                  Building automated software solutions using Laravel and
-                  Flutter for internal and customer-facing applications
-                </li>
-                <li class="flex items-start">
-                  <span class="text-green-400 mr-2">▹</span>
-                  Designing and consuming RESTful APIs for seamless data
-                  integration across services
-                </li>
-                <li class="flex items-start">
-                  <span class="text-green-400 mr-2">▹</span>
-                  Collaborating with cross-functional teams in Agile-driven
-                  delivery
-                </li>
-                <li class="flex items-start">
-                  <span class="text-green-400 mr-2">▹</span>
-                  Optimizing code for efficiency, maintainability, and
-                  scalability
-                </li>
-              </ul>
+              <button id="prev"
+                class="absolute top-1/2 -left-5 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center text-sm"
+                style="background:var(--g3);border:1px solid rgba(255,255,255,.08);">‹</button>
+              <button id="next"
+                class="absolute top-1/2 -right-5 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center text-sm"
+                style="background:var(--g3);border:1px solid rgba(255,255,255,.08);">›</button>
             </div>
           </div>
-
-          <!-- Creatives Garage -->
-          <div class="relative pl-8 border-l-4 border-blue-500">
-            <div class="absolute -left-3 top-0 w-6 h-6 bg-blue-500 rounded-full border-4 border-zinc-950"></div>
-            <div
-              class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 hover:border-blue-500 transition">
-              <div class="flex items-center justify-between mb-2">
-                <h3 class="text-2xl font-bold text-blue-400 orbitron">
-                  Creatives Garage (NGO)
-                </h3>
-              </div>
-              <p class="text-gray-400 mb-4">
-                Web and Mobile Application Developer • May 2024 - Apr 2025
-              </p>
-              <ul class="text-gray-300 space-y-2 text-sm">
-                <li class="flex items-start">
-                  <span class="text-blue-400 mr-2">▹</span>
-                  Built custom mobile application "Mzalendo" now live on
-                  Google Play Store
-                </li>
-                <li class="flex items-start">
-                  <span class="text-blue-400 mr-2">▹</span>
-                  Enhanced websites with new functions and pages
-                </li>
-                <li class="flex items-start">
-                  <span class="text-blue-400 mr-2">▹</span>
-                  Provided IT support across the organization
-                </li>
-              </ul>
-            </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass rounded-xl overflow-hidden group gsap-reveal">
+          <div class="relative h-40 overflow-hidden"><img src="images/skycast.jpg" alt="SkyCast"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(8,8,8,.9),transparent);"></div>
           </div>
-
-          <!-- Palla Credit Limited -->
-          <div class="relative pl-8 border-l-4 border-purple-500">
-            <div class="absolute -left-3 top-0 w-6 h-6 bg-purple-500 rounded-full border-4 border-zinc-950"></div>
-            <div
-              class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 hover:border-purple-500 transition">
-              <h3 class="text-2xl font-bold text-purple-400 orbitron mb-2">
-                Palla Credit Limited
-              </h3>
-              <p class="text-gray-400 mb-4">
-                Business Developer Intern • Jan 2024 - Mar 2024
-              </p>
-              <ul class="text-gray-300 space-y-2 text-sm">
-                <li class="flex items-start">
-                  <span class="text-purple-400 mr-2">▹</span>
-                  Proposed workflow automation software and training to
-                  streamline processes
-                </li>
-                <li class="flex items-start">
-                  <span class="text-purple-400 mr-2">▹</span>
-                  Recommended customer feedback mechanisms to enhance
-                  satisfaction
-                </li>
-                <li class="flex items-start">
-                  <span class="text-purple-400 mr-2">▹</span>
-                  Formulated strategic development goals
-                </li>
-              </ul>
-            </div>
+          <div class="p-5"><span class="tag tag-blue">Flutter • Dart</span>
+            <h3 class="font-orb text-xs font-bold text-white mt-3 mb-2">SkyCast</h3>
+            <p class="text-zinc-600 text-xs mb-3">Real-time weather via OpenWeatherAPI.</p><a href="assets/Sky_cast.apk"
+              class="text-xs font-mono em">Get APK →</a>
           </div>
-
-          <!-- KUTRRH -->
-          <div class="relative pl-8 border-l-4 border-yellow-500">
-            <div class="absolute -left-3 top-0 w-6 h-6 bg-yellow-500 rounded-full border-4 border-zinc-950"></div>
-            <div
-              class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 hover:border-yellow-500 transition">
-              <h3 class="text-2xl font-bold text-yellow-400 orbitron mb-2">
-                Kenyatta University Hospital
-              </h3>
-              <p class="text-gray-400 mb-4">
-                Web Application Developer Attachee • Jan 2023 - Apr 2023
-              </p>
-              <ul class="text-gray-300 space-y-2 text-sm">
-                <li class="flex items-start">
-                  <span class="text-yellow-400 mr-2">▹</span>
-                  Developed comprehensive web application using Laravel from
-                  the ground up
-                </li>
-                <li class="flex items-start">
-                  <span class="text-yellow-400 mr-2">▹</span>
-                  Implemented round-robin scheduling for nurse intern ward
-                  assignments
-                </li>
-                <li class="flex items-start">
-                  <span class="text-yellow-400 mr-2">▹</span>
-                  Successfully deployed the application showcasing technical
-                  proficiency
-                </li>
-              </ul>
-            </div>
+        </div>
+        <div class="glass rounded-xl overflow-hidden group gsap-reveal">
+          <div class="relative h-40 overflow-hidden"><img src="images/temp.jpeg" alt="Temp"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(8,8,8,.9),transparent);"></div>
           </div>
-
-          <!-- Texas Cancer Center -->
-          <div class="relative pl-8 border-l-4 border-red-500">
-            <div class="absolute -left-3 top-0 w-6 h-6 bg-red-500 rounded-full border-4 border-zinc-950"></div>
-            <div
-              class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-6 hover:border-red-500 transition">
-              <h3 class="text-2xl font-bold text-red-400 orbitron mb-2">
-                Texas Cancer Center
-              </h3>
-              <p class="text-gray-400 mb-4">
-                Volunteer • Jan 2021 - Mar 2021
-              </p>
-              <ul class="text-gray-300 space-y-2 text-sm">
-                <li class="flex items-start">
-                  <span class="text-red-400 mr-2">▹</span>
-                  Managed diverse responsibilities including housekeeping,
-                  bookkeeping, and data entry
-                </li>
-                <li class="flex items-start">
-                  <span class="text-red-400 mr-2">▹</span>
-                  Enhanced communication skills through patient interactions
-                </li>
-              </ul>
-            </div>
+          <div class="p-5"><span class="tag tag-pur">ML • R</span>
+            <h3 class="font-orb text-xs font-bold text-white mt-3 mb-2">Temp Prediction</h3>
+            <p class="text-zinc-600 text-xs mb-3">30 years of data → Nairobi forecasts.</p><a
+              href="https://github.com/Moses-Mbugs/Nairobi-temperature" target="_blank"
+              class="text-xs font-mono em">GitHub →</a>
+          </div>
+        </div>
+        <div class="glass rounded-xl overflow-hidden group gsap-reveal">
+          <div class="relative h-40 flex items-center justify-center"
+            style="background:linear-gradient(135deg,rgba(234,179,8,.08),rgba(234,88,12,.08));"><i
+              class="fas fa-user-graduate text-5xl" style="color:rgba(234,179,8,.25);"></i></div>
+          <div class="p-5"><span class="tag tag-yel">PHP • Laravel</span>
+            <h3 class="font-orb text-xs font-bold text-white mt-3 mb-2">Apprentice</h3>
+            <p class="text-zinc-600 text-xs mb-3">Mentorship platform for IT practitioners.</p><span
+              class="text-xs font-mono text-zinc-600">In Progress</span>
+          </div>
+        </div>
+        <div class="glass rounded-xl overflow-hidden group gsap-reveal">
+          <div class="relative h-40 overflow-hidden"><img src="images/random.png" alt="Random"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(8,8,8,.9),transparent);"></div>
+          </div>
+          <div class="p-5"><span class="tag tag-em">Flutter • Design</span>
+            <h3 class="font-orb text-xs font-bold text-white mt-3 mb-2">Jijitsu</h3>
+            <p class="text-zinc-600 text-xs mb-3">Did You Know? — Retro-Neobrutalism.</p><span
+              class="text-xs font-mono em">Coming soon</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Achievements Section -->
-  <section id="achievements" class="min-h-screen bg-black py-20 px-6">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-5xl font-extrabold text-center text-green-500 mb-16 orbitron">
-        Key Achievements
-      </h2>
+  <!-- ═══ SPACE JOURNEY ═══ -->
+  <section id="experience">
+    <!-- Nebula -->
+    <div
+      style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 12% 55%,rgba(16,185,129,.05) 0%,transparent 35%),radial-gradient(ellipse at 72% 18%,rgba(139,92,246,.06) 0%,transparent 35%),radial-gradient(ellipse at 88% 82%,rgba(59,130,246,.04) 0%,transparent 30%);z-index:0;">
+    </div>
+    <canvas id="starsCanvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;"></canvas>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Achievement 1 -->
-        <div
-          class="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-xl p-8 hover:border-green-500 transition-all hover:shadow-2xl hover:shadow-green-500/20">
-          <div class="flex items-start space-x-4">
-            <div class="text-green-400 text-3xl flex-shrink-0">
-              <i class="fas fa-mobile-alt"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-green-400 mb-2">
-                Mobile App Launch
-              </h3>
-              <p class="text-gray-300 text-sm">
-                Singlehandedly built, tested, and deployed the "Mzalendo"
-                Android app using Kotlin, delivering a smooth, intuitive
-                experience — now live on the Google Play Store.
-              </p>
-            </div>
+    <div style="position:relative;z-index:10;padding:5rem 3rem 1rem;" class="gsap-reveal">
+      <p class="em text-xs font-mono mb-2">// 03 — journey</p>
+      <h2 class="font-orb text-4xl font-bold text-white">The Odyssey</h2>
+      <p class="text-zinc-600 text-sm mt-2">Each planet is a chapter. <span class="em">Click to explore.</span></p>
+    </div>
+
+    <div id="spaceCanvas">
+      <svg id="orbitSvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;"
+        preserveAspectRatio="none"></svg>
+      <div id="spaceship" style="width:44px;height:66px;">
+        <svg viewBox="0 0 44 66" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="66">
+          <ellipse cx="22" cy="59" rx="9" ry="5.5" fill="#10b981" opacity=".3" />
+          <ellipse cx="22" cy="56" rx="5.5" ry="3.5" fill="#34d399" opacity=".55" />
+          <path d="M14 24L12 50L22 46L32 50L30 24Z" fill="#d4d4d8" />
+          <path d="M22 6L13 24H31L22 6Z" fill="#10b981" />
+          <ellipse cx="22" cy="27" rx="7" ry="5" fill="#10b981" opacity=".85" />
+          <ellipse cx="22" cy="26" rx="4.5" ry="3" fill="#a7f3d0" opacity=".5" />
+          <path d="M12 42L3 58L17 51Z" fill="#a1a1aa" />
+          <path d="M32 42L41 58L27 51Z" fill="#a1a1aa" />
+          <rect x="8" y="36" width="6" height="10" rx="3" fill="#71717a" />
+          <rect x="30" y="36" width="6" height="10" rx="3" fill="#71717a" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="planetModal">
+      <div id="modalCard">
+        <button id="closeModal"
+          style="position:absolute;top:16px;right:16px;background:none;border:none;color:#52525b;cursor:pointer;font-size:1.1rem;transition:color .2s;"
+          onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#52525b'">
+          <i class="fas fa-times"></i>
+        </button>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements" class="py-24 px-6" style="background:#0d0d0d;">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-14 gsap-reveal">
+        <p class="em text-xs font-mono mb-2">// 04 — achievements</p>
+        <h2 class="font-orb text-4xl font-bold text-white">Key Achievements</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass rounded-xl p-7 flex gap-5 items-start gsap-reveal">
+          <div class="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+            style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);"><i
+              class="fas fa-mobile-alt text-sm em"></i></div>
+          <div>
+            <h3 class="font-bold text-white mb-2 text-sm">Mobile App Launch</h3>
+            <p class="text-zinc-600 text-xs leading-relaxed">Singlehandedly built, tested, and deployed Mzalendo — 200+
+              downloads within the first 24 hours of launch on Google Play Store.</p>
           </div>
         </div>
-
-        <!-- Achievement 2 -->
-        <div
-          class="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-xl p-8 hover:border-blue-500 transition-all hover:shadow-2xl hover:shadow-blue-500/20">
-          <div class="flex items-start space-x-4">
-            <div class="text-blue-400 text-3xl flex-shrink-0">
-              <i class="fas fa-money-check-alt"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-blue-400 mb-2">
-                B2C Reconciliation System
-              </h3>
-              <p class="text-gray-300 text-sm">
-                Developed automated Bank-to-Customer (B2C) reconciliation
-                system integrating M-Pesa and banking transactions to enhance
-                financial accuracy and efficiency.
-              </p>
-            </div>
+        <div class="glass rounded-xl p-7 flex gap-5 items-start gsap-reveal">
+          <div class="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+            style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);"><i
+              class="fas fa-money-check-alt text-blue-400 text-sm"></i></div>
+          <div>
+            <h3 class="font-bold text-white mb-2 text-sm">B2C Reconciliation System</h3>
+            <p class="text-zinc-600 text-xs leading-relaxed">Automated M-Pesa and banking transaction reconciliation,
+              saving KES 1.5M in system costs with 95%+ faster turnaround.</p>
           </div>
         </div>
-
-        <!-- Achievement 3 -->
-        <div
-          class="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-xl p-8 hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-500/20">
-          <div class="flex items-start space-x-4">
-            <div class="text-purple-400 text-3xl flex-shrink-0">
-              <i class="fas fa-robot"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-purple-400 mb-2">
-                AI-Driven HR System
-              </h3>
-              <p class="text-gray-300 text-sm">
-                Built AI-driven Human Resource system with smart chatbot
-                assistant capable of filtering potential employees and
-                responding to staff queries based on organizational policies.
-              </p>
-            </div>
+        <div class="glass rounded-xl p-7 flex gap-5 items-start gsap-reveal">
+          <div class="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+            style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);"><i
+              class="fas fa-robot text-purple-400 text-sm"></i></div>
+          <div>
+            <h3 class="font-bold text-white mb-2 text-sm">AI-Driven HR System</h3>
+            <p class="text-zinc-600 text-xs leading-relaxed">Built an AI HR system with a smart chatbot capable of
+              filtering employees and responding to policy-based staff queries.</p>
           </div>
         </div>
-
-        <!-- Achievement 4 -->
-        <div
-          class="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-xl p-8 hover:border-yellow-500 transition-all hover:shadow-2xl hover:shadow-yellow-500/20">
-          <div class="flex items-start space-x-4">
-            <div class="text-yellow-400 text-3xl flex-shrink-0">
-              <i class="fas fa-chart-line"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-yellow-400 mb-2">
-                Digital Lending Innovation
-              </h3>
-              <p class="text-gray-300 text-sm">
-                Designed and implemented digital lending scorecard and
-                developed mobile app interfaces to improve user experience and
-                decision-making processes.
-              </p>
-            </div>
+        <div class="glass rounded-xl p-7 flex gap-5 items-start gsap-reveal">
+          <div class="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+            style="background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.2);"><i
+              class="fas fa-chart-line text-yellow-400 text-sm"></i></div>
+          <div>
+            <h3 class="font-bold text-white mb-2 text-sm">Digital Lending Scorecard</h3>
+            <p class="text-zinc-600 text-xs leading-relaxed">Reduced loan decision turnaround by 45% — from 2 days to
+              under 5 minutes with automated credit evaluation.</p>
           </div>
         </div>
-
-        <!-- Achievement 5 -->
-        <div
-          class="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-xl p-8 hover:border-red-500 transition-all hover:shadow-2xl hover:shadow-red-500/20">
-          <div class="flex items-start space-x-4">
-            <div class="text-red-400 text-3xl flex-shrink-0">
-              <i class="fas fa-recycle"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-red-400 mb-2">
-                Sustainable Process Redesign
-              </h3>
-              <p class="text-gray-300 text-sm">
-                Redesigned branch forms, reducing paper waste and operational
-                costs while improving customer experience across multiple
-                African affiliates.
-              </p>
-            </div>
+        <div class="glass rounded-xl p-7 flex gap-5 items-start gsap-reveal md:col-span-2">
+          <div class="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+            style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);"><i
+              class="fas fa-recycle text-red-400 text-sm"></i></div>
+          <div>
+            <h3 class="font-bold text-white mb-2 text-sm">Sustainable Process Redesign</h3>
+            <p class="text-zinc-600 text-xs leading-relaxed">Redesigned branch forms reducing paper waste and
+              operational costs while improving customer experience across multiple African affiliates.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="min-h-screen bg-gradient-to-br from-gray-900 via-zinc-950 to-black py-20 px-6">
-    <div class="max-w-7xl mx-auto text-center">
-      <!-- Title -->
-      <h2 class="text-5xl font-extrabold text-green-500 mb-8 tracking-tight orbitron">
-        Get in Touch
-      </h2>
-      <p class="text-gray-300 mb-6 text-lg leading-relaxed max-w-2xl mx-auto">
-        I'm available for select freelance projects and collaborations. Got a
-        project in mind? Let's team up and make it happen!
-      </p>
-      <p class="text-gray-300 mb-12 text-lg">
-        Reach out through my socials or email below.
-      </p>
-
-      <!-- Social Media Links -->
-      <div class="flex justify-center space-x-8 mb-16">
-        <a href="https://github.com/moses-mbugs" target="_blank"
-          class="text-gray-400 hover:text-green-400 transition-all transform hover:scale-125 text-4xl">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/moses-mbugua-muigai-01209620a/" target="_blank"
-          class="text-gray-400 hover:text-blue-500 transition-all transform hover:scale-125 text-4xl">
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="https://www.instagram.com/mosaayyyy/" target="_blank"
-          class="text-gray-400 hover:text-pink-500 transition-all transform hover:scale-125 text-4xl">
-          <i class="fab fa-instagram"></i>
-        </a>
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6" style="background:linear-gradient(180deg,#0d0d0d 0%,#080808 100%);">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-14 text-center gsap-reveal">
+        <p class="em text-xs font-mono mb-2">// 05 — contact</p>
+        <h2 class="font-orb text-4xl font-bold text-white">Get in Touch</h2>
+        <p class="text-zinc-600 text-sm mt-3 max-w-lg mx-auto">Available for freelance projects and full-time
+          opportunities. Got something in mind? Let's build it.</p>
       </div>
-
-      <!-- Contact Card -->
-      <div
-        class="bg-gradient-to-br from-gray-800 to-gray-900 shadow-2xl rounded-2xl px-10 py-12 mx-auto max-w-4xl border border-gray-700 hover:border-green-500 transition-all">
-        <h3 class="text-3xl font-bold text-gray-100 mb-6 orbitron">
-          Let's Work Together
-        </h3>
-        <p class="text-gray-300 text-lg leading-relaxed mb-8">
-          Have an exciting project in mind? I'm passionate about building
-          impactful applications and contributing to innovative teams.
-        </p>
-
-        <div class="bg-gray-900/50 border border-gray-700 rounded-lg p-6 mb-8">
-          <div class="flex items-center justify-center space-x-4 text-gray-300">
-            <i class="fas fa-envelope text-green-400 text-2xl"></i>
-            <span class="text-lg">mbuguam323@gmail.com</span>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 gsap-reveal">
+        <div class="glass rounded-2xl p-8 font-mono text-sm">
+          <div class="text-zinc-700 text-xs mb-6 flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+            <span class="w-3 h-3 rounded-full inline-block" style="background:var(--em);"></span>
+            <span class="ml-2 text-zinc-700">contact.sh</span>
           </div>
-          <div class="flex items-center justify-center space-x-4 text-gray-300 mt-4">
-            <i class="fas fa-phone text-green-400 text-2xl"></i>
-            <span class="text-lg">+254 758 193 688</span>
+          <div class="space-y-1">
+            <p><span class="em">$</span> <span class="text-zinc-500">whoami</span></p>
+            <p class="pl-4 text-zinc-300 mb-3">Moses Mbugua Muigai</p>
+            <p><span class="em">$</span> <span class="text-zinc-500">cat email.txt</span></p>
+            <p class="pl-4 em mb-3">mbuguam323@gmail.com</p>
+            <p><span class="em">$</span> <span class="text-zinc-500">cat phone.txt</span></p>
+            <p class="pl-4 text-zinc-300 mb-3">+254 758 193 688</p>
+            <p><span class="em">$</span> <span class="text-zinc-500">cat education.txt</span></p>
+            <p class="pl-4 text-zinc-300 mb-3">BBIT — Strathmore University</p>
+            <p><span class="em">$</span> <span class="text-zinc-500">cat certs.txt</span></p>
+            <p class="pl-4 text-zinc-300 mb-4">AWS • Cisco Cybersecurity • Data Protection</p>
+            <p class="flex items-center gap-1"><span class="em">$</span><span class="animate-pulse em">█</span></p>
           </div>
         </div>
-
-        <a href="mailto:mbuguam323@gmail.com"
-          class="inline-block bg-gradient-to-r from-green-500 to-blue-500 text-white font-semibold text-lg px-8 py-4 rounded-lg shadow-lg hover:from-green-600 hover:to-blue-600 transition-all transform hover:scale-105">
-          <i class="fas fa-paper-plane mr-2"></i>
-          Send Message
-        </a>
-      </div>
-
-      <!-- Additional Info -->
-      <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-        <div class="text-center">
-          <i class="fas fa-map-marker-alt text-green-400 text-3xl mb-3"></i>
-          <p class="text-gray-400">Nairobi, Kenya</p>
-        </div>
-        <div class="text-center">
-          <i class="fas fa-graduation-cap text-green-400 text-3xl mb-3"></i>
-          <p class="text-gray-400">BBIT - Strathmore University</p>
-        </div>
-        <div class="text-center">
-          <i class="fas fa-certificate text-green-400 text-3xl mb-3"></i>
-          <p class="text-gray-400">AWS • Cyber Security • Data Protection</p>
+        <div class="flex flex-col justify-between gap-6">
+          <div class="glass rounded-2xl p-8">
+            <h3 class="font-orb text-base font-bold text-white mb-5">Connect</h3>
+            <div class="space-y-3">
+              <a href="https://github.com/moses-mbugs" target="_blank"
+                class="flex items-center gap-4 p-3 rounded-xl transition hover:scale-[1.01]"
+                style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);">
+                <i class="fab fa-github text-xl text-white"></i><span
+                  class="text-zinc-400 text-sm">github.com/moses-mbugs</span>
+              </a>
+              <a href="https://www.linkedin.com/in/moses-mbugua-muigai-01209620a/" target="_blank"
+                class="flex items-center gap-4 p-3 rounded-xl transition hover:scale-[1.01]"
+                style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);">
+                <i class="fab fa-linkedin text-xl text-blue-400"></i><span
+                  class="text-zinc-400 text-sm">linkedin.com/in/moses-mbugua</span>
+              </a>
+              <a href="https://www.instagram.com/mosaayyyy/" target="_blank"
+                class="flex items-center gap-4 p-3 rounded-xl transition hover:scale-[1.01]"
+                style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);">
+                <i class="fab fa-instagram text-xl text-pink-400"></i><span
+                  class="text-zinc-400 text-sm">@mosaayyyy</span>
+              </a>
+            </div>
+          </div>
+          <a href="mailto:mbuguam323@gmail.com"
+            class="flex items-center justify-center gap-3 py-5 rounded-2xl font-orb font-bold text-black text-sm transition hover:opacity-85"
+            style="background:var(--em);box-shadow:0 4px 30px rgba(16,185,129,.28);">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Back-to-Top Button -->
-  <button id="backToTop"
-    class="hidden fixed bottom-8 right-8 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all transform hover:scale-110 z-50">
-    <i class="fas fa-arrow-up text-xl"></i>
-  </button>
-
-  <!-- Footer -->
-  <footer class="py-8 bg-gray-900 text-center text-gray-400 border-t border-gray-800">
-    <p class="text-sm">© 2026 Moses Mbugua Muigai. All Rights Reserved.</p>
-    <p class="text-xs mt-2 text-gray-500">
-      Built with passion • Powered by innovation
-    </p>
+  <footer class="py-8 text-center text-xs text-zinc-700 font-mono" style="border-top:1px solid rgba(255,255,255,.04);">
+    <p>© 2026 Moses Mbugua Muigai .</p>
+    <p class="mt-1" style="color:rgba(16,185,129,.35);">// EOF</p>
   </footer>
 
+  <button id="backToTop"
+    style="display:none;position:fixed;bottom:32px;right:32px;width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;z-index:50;background:var(--em);box-shadow:0 0 20px rgba(16,185,129,.35);color:#000;align-items:center;justify-content:center;transition:transform .2s;">
+    <i class="fas fa-arrow-up text-sm"></i>
+  </button>
+
   <script>
-    // Typing animation
-    const typingElement = document.getElementById("typing");
-    const typingTexts = [
-      "Full Stack Developer",
-      "Mobile Application Developer",
-      "Software Engineer",
-    ];
-    let typingIndex = 0,
-      charIndex = 0;
-    let isDeleting = false;
+    gsap.registerPlugin(ScrollTrigger);
 
-    function type() {
-      const currentText = typingTexts[typingIndex];
-      if (isDeleting) {
-        charIndex--;
-      } else {
-        charIndex++;
-      }
-      typingElement.textContent = currentText.slice(0, charIndex);
-      typingElement.style.borderRight = "2px solid #10b981";
+    // ── Hero entrance ──
+    gsap.timeline({ delay: .1 })
+      .from('#hero-main', { opacity: 0, y: 40, duration: .85, ease: 'power3.out' })
+      .from('.bento-sm > *', { opacity: 0, y: 20, stagger: .1, duration: .5, ease: 'power2.out' }, '-=.5');
 
-      if (!isDeleting && charIndex === currentText.length) {
-        setTimeout(() => (isDeleting = true), 1500);
-      } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        typingIndex = (typingIndex + 1) % typingTexts.length;
-      }
+    // ── Scroll reveals ──
+    gsap.utils.toArray('.gsap-reveal').forEach(el => {
+      gsap.from(el, { scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }, opacity: 0, y: 28, duration: .7, ease: 'power2.out' });
+    });
 
-      setTimeout(type, isDeleting ? 50 : 100);
-    }
-
+    // ── Typing ──
+    const typingEl = document.getElementById('typing');
+    const words = ['Full Stack Developer', 'Mobile App Developer', 'Software Engineer'];
+    let wIdx = 0, cIdx = 0, deleting = false;
+    function type() { const w = words[wIdx]; cIdx += deleting ? -1 : 1; typingEl.textContent = w.slice(0, cIdx); if (!deleting && cIdx === w.length) setTimeout(() => deleting = true, 1800); else if (deleting && cIdx === 0) { deleting = false; wIdx = (wIdx + 1) % words.length; } setTimeout(type, deleting ? 50 : 100); }
     type();
 
-    // Slideshow
-    document.addEventListener("DOMContentLoaded", () => {
-      const slides = document.querySelectorAll(".slideshow img");
-      const prevButton = document.getElementById("prev");
-      const nextButton = document.getElementById("next");
-      let currentSlide = 0;
-      const totalSlides = slides.length;
+    // ── Slideshow ──
+    const slides = document.querySelectorAll('.slideshow img');
+    let cur = 0;
+    const showSlide = i => slides.forEach((s, idx) => s.style.opacity = idx === i ? '1' : '0');
+    if (slides.length) showSlide(0);
+    let iv = setInterval(() => { cur = (cur + 1) % slides.length; showSlide(cur); }, 3000);
+    const resetIv = () => { clearInterval(iv); iv = setInterval(() => { cur = (cur + 1) % slides.length; showSlide(cur); }, 3000); };
+    document.getElementById('next').onclick = () => { cur = (cur + 1) % slides.length; showSlide(cur); resetIv(); };
+    document.getElementById('prev').onclick = () => { cur = (cur - 1 + slides.length) % slides.length; showSlide(cur); resetIv(); };
 
-      const showSlide = (index) => {
-        slides.forEach((slide, i) => {
-          slide.style.opacity = i === index ? "1" : "0";
-        });
-      };
-
-      const nextSlide = () => {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        showSlide(currentSlide);
-      };
-
-      const prevSlide = () => {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        showSlide(currentSlide);
-      };
-
-      let slideInterval = setInterval(nextSlide, 3000);
-
-      nextButton.addEventListener("click", () => {
-        clearInterval(slideInterval);
-        nextSlide();
-        slideInterval = setInterval(nextSlide, 3000);
-      });
-
-      prevButton.addEventListener("click", () => {
-        clearInterval(slideInterval);
-        prevSlide();
-        slideInterval = setInterval(nextSlide, 3000);
-      });
-
-      showSlide(currentSlide);
-    });
-
-    // Smooth scrolling
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener("click", function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute("href"));
-        if (target) {
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      });
-    });
-
-    // Back-to-Top Button
-    const backToTop = document.getElementById("backToTop");
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 300) {
-        backToTop.classList.remove("hidden");
-      } else {
-        backToTop.classList.add("hidden");
+    // ══════════════════════════════════════════
+    // SPACE JOURNEY
+    // ══════════════════════════════════════════
+    const PLANETS = [
+      {
+        id: 'texas', company: 'Texas Cancer Center', role: 'Volunteer', period: 'Jan 2021 – Mar 2021', type: 'Volunteer',
+        left: 7, top: 68, size: 42, color: '#f87171',
+        gradient: 'radial-gradient(circle at 35% 35%,#ff6b6b,#7f1d1d)',
+        glow: 'rgba(239,68,68,.4)', ring: 'rgba(239,68,68,.2)', year: "'21",
+        metrics: [], tech: [],
+        bullets: ['Managed data entry, bookkeeping, and housekeeping duties', 'Enhanced communication skills through direct patient interactions', 'Supported daily operations of a healthcare facility']
+      },
+      {
+        id: 'kutrrh', company: 'Kenyatta University Hospital', subtitle: 'KUTRRH', role: 'Web App Developer Attachment', period: 'Jan 2023 – Apr 2023', type: 'Attachment',
+        left: 22, top: 28, size: 58, color: '#22d3ee',
+        gradient: 'radial-gradient(circle at 35% 35%,#67e8f9,#0e7490)',
+        glow: 'rgba(6,182,212,.4)', ring: 'rgba(6,182,212,.2)', year: "'23",
+        metrics: [{ value: '300+', label: 'interns automated' }, { value: '60%', label: 'less manual work' }, { value: '40%', label: 'fewer ward overloads' }],
+        tech: ['Laravel', 'PHP', 'MySQL'],
+        bullets: ['Co-developed Laravel nurse internship scheduling system', 'Implemented round-robin ward allocation algorithm', 'Served a large healthcare institution with 300+ interns']
+      },
+      {
+        id: 'palla', company: 'Palla Credit Limited', role: 'Business Developer Intern', period: 'Jan 2024 – Mar 2024', type: 'Internship',
+        left: 40, top: 65, size: 50, color: '#fbbf24',
+        gradient: 'radial-gradient(circle at 35% 35%,#fde68a,#92400e)',
+        glow: 'rgba(245,158,11,.4)', ring: 'rgba(245,158,11,.2)', year: "'24",
+        metrics: [], tech: [],
+        bullets: ['Identified automation opportunities to reduce manual workflows', 'Proposed digital process improvements for operational efficiency', 'Formulated strategic development goals for growth']
+      },
+      {
+        id: 'creatives', company: 'Creatives Garage', subtitle: 'NGO', role: 'Web & Mobile App Developer', period: 'May 2024 – Apr 2025', type: 'Full-time',
+        left: 62, top: 26, size: 72, color: '#a78bfa',
+        gradient: 'radial-gradient(circle at 35% 35%,#c4b5fd,#1e1b4b)',
+        glow: 'rgba(139,92,246,.45)', ring: 'rgba(139,92,246,.25)', year: "'24–'25",
+        metrics: [{ value: '89%', label: 'faster page loads' }, { value: '600+', label: 'active users' }, { value: '200+', label: 'downloads in 24hrs' }],
+        tech: ['Kotlin', 'Flutter', 'Laravel', 'WordPress'],
+        bullets: ['Reduced load time from 982ms to 102ms via frontend/backend optimization', 'Built & deployed 3 production apps with 600+ active users', 'Mzalendo Android game: 200+ downloads within first 24 hours']
+      },
+      {
+        id: 'ecobank', company: 'Ecobank Kenya', role: 'Software Developer', period: 'Apr 2025 – Present', type: 'Current',
+        left: 80, top: 52, size: 90, color: '#34d399',
+        gradient: 'radial-gradient(circle at 35% 35%,#6ee7b7,#064e3b)',
+        glow: 'rgba(16,185,129,.5)', ring: 'rgba(16,185,129,.3)', year: 'Now',
+        metrics: [{ value: '70%', label: 'less processing time' }, { value: '65%', label: 'faster DB queries' }, { value: 'KES 1.5M', label: 'system cost savings' }, { value: '95%+', label: 'faster statements' }],
+        tech: ['Laravel', 'Flutter', 'MySQL', 'REST APIs', 'M-Pesa'],
+        bullets: ['Automated banking workflows — reduced human error rates by 98%', 'Optimized SQL queries from 1.4s → 0.5s avg execution time', 'Smart Statement Analyzer: KES 1.5M saved, days → minutes', 'Digital Lending Scorecard: 2 days → under 5 minutes']
       }
+    ];
+
+    // Stars canvas
+    const canvas = document.getElementById('starsCanvas');
+    const ctx = canvas.getContext('2d');
+    function resizeCanvas() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+    resizeCanvas(); window.addEventListener('resize', () => { resizeCanvas(); buildOrbitPath(); });
+    const stars = Array.from({ length: 300 }, () => ({ x: Math.random() * 100, y: Math.random() * 100, r: Math.random() * 1.3 + .3, o: Math.random() * .6 + .3, sp: Math.random() * .5 + .2 }));
+    let t = 0;
+    function drawStars() { ctx.clearRect(0, 0, canvas.width, canvas.height); stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x / 100 * canvas.width, s.y / 100 * canvas.height, s.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(255,255,255,${s.o * (0.7 + 0.3 * Math.sin(t * s.sp))})`; ctx.fill(); }); t += .018; requestAnimationFrame(drawStars); }
+    drawStars();
+
+    // Build planets
+    const spaceCanvas = document.getElementById('spaceCanvas');
+    PLANETS.forEach(p => {
+      const el = document.createElement('div');
+      el.className = 'planet-container';
+      el.dataset.id = p.id;
+      el.style.left = p.left + '%';
+      el.style.top = p.top + '%';
+      const half = p.size / 2;
+      el.innerHTML = `
+    <div class="p-glow" style="width:${p.size + 44}px;height:${p.size + 44}px;top:${-(22)}px;left:${-(22)}px;background:${p.glow.replace(/[\d.]+\)$/, '.18)')};"></div>
+    <div class="p-ring" style="width:${p.size + 20}px;height:${p.size + 20}px;top:${-10}px;left:${-10}px;border-color:${p.ring};"></div>
+    ${p.type === 'Current' ? `<div style="position:absolute;width:${p.size + 20}px;height:${p.size + 20}px;top:${-10}px;left:${-10}px;border-radius:50%;border:2px solid ${p.color};opacity:.6;animation:pulse-ring 2s ease-out infinite;pointer-events:none;"></div>` : ''}
+    <div class="p-body" style="width:${p.size}px;height:${p.size}px;background:${p.gradient};box-shadow:0 0 20px ${p.glow};"></div>
+    <div class="p-label" style="top:${p.size + 10}px;">
+      <div style="font-family:Orbitron,monospace;font-size:.58rem;color:#e4e4e7;font-weight:700;letter-spacing:.03em;">${p.subtitle || p.company.split(' ').slice(0, 2).join(' ')}</div>
+      <div style="font-family:JetBrains Mono,monospace;font-size:.52rem;color:#52525b;margin-top:2px;">${p.year}</div>
+    </div>`;
+      el.addEventListener('mouseenter', () => { flyTo(el); });
+      el.addEventListener('click', () => openPlanetModal(p));
+      spaceCanvas.appendChild(el);
     });
 
-    backToTop.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    // Spaceship
+    const ship = document.getElementById('spaceship');
+    const eco = PLANETS.find(p => p.id === 'ecobank');
+    ship.style.left = (eco.left - 4) + '%';
+    ship.style.top = (eco.top - 14) + '%';
+    gsap.to(ship, { y: -12, rotation: 4, duration: 3.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
 
-    // Add scroll animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -100px 0px",
-    };
+    function flyTo(planetEl) {
+      const canvasRect = spaceCanvas.getBoundingClientRect();
+      const pRect = planetEl.getBoundingClientRect();
+      const tx = pRect.left - canvasRect.left + pRect.width / 2 - 22;
+      const ty = pRect.top - canvasRect.top - 72;
+      const sx = ship.offsetLeft + 22;
+      const sy = ship.offsetTop + 66;
+      const angle = Math.atan2((ty + 66) - sy, (tx + 22) - sx) * 180 / Math.PI + 90;
+      gsap.to(ship, { left: tx, top: ty, rotation: angle, duration: .95, ease: 'power2.inOut', overwrite: 'auto' });
+    }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = "1";
-          entry.target.style.transform = "translateY(0)";
-        }
-      });
-    }, observerOptions);
+    // Orbit path
+    function buildOrbitPath() {
+      const svg = document.getElementById('orbitSvg');
+      svg.innerHTML = '';
+      const W = spaceCanvas.offsetWidth, H = spaceCanvas.offsetHeight;
+      const pts = PLANETS.map(p => ({ x: p.left / 100 * W, y: p.top / 100 * H }));
+      pts.sort((a, b) => a.x - b.x);
+      if (pts.length < 2) return;
+      let d = `M ${pts[0].x} ${pts[0].y}`;
+      for (let i = 1; i < pts.length; i++) {
+        const prev = pts[i - 1], curr = pts[i];
+        const cx = (prev.x + curr.x) / 2;
+        d += ` Q ${cx} ${prev.y + (curr.y - prev.y) * .2} ${curr.x} ${curr.y}`;
+      }
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('stroke', 'rgba(255,255,255,.05)');
+      path.setAttribute('stroke-width', '1.5');
+      path.setAttribute('stroke-dasharray', '5 10');
+      path.setAttribute('fill', 'none');
+      svg.appendChild(path);
 
-    document.querySelectorAll("section").forEach((section) => {
-      section.style.opacity = "0";
-      section.style.transform = "translateY(20px)";
-      section.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-      observer.observe(section);
-    });
+      // Glow version
+      const glow = path.cloneNode();
+      glow.setAttribute('stroke', 'rgba(16,185,129,.08)');
+      glow.setAttribute('stroke-width', '3');
+      glow.setAttribute('stroke-dasharray', 'none');
+      glow.setAttribute('filter', 'url(#blur)');
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+      filter.setAttribute('id', 'blur');
+      const fe = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+      fe.setAttribute('stdDeviation', '3');
+      filter.appendChild(fe); defs.appendChild(filter); svg.appendChild(defs); svg.insertBefore(glow, path);
+    }
+    window.addEventListener('load', buildOrbitPath);
+
+    // Planet modal
+    function openPlanetModal(p) {
+      const modal = document.getElementById('planetModal');
+      const card = document.getElementById('modalCard');
+      const content = document.getElementById('modalContent');
+      card.style.border = `1px solid ${p.glow.replace(/[\d.]+\)$/, '.35)')}`;
+      card.style.boxShadow = `0 0 60px ${p.glow.replace(/[\d.]+\)$/, '.12)')}`;
+      const metricsGrid = p.metrics.length ? `
+    <div class="metric-grid" style="grid-template-columns:repeat(${Math.min(p.metrics.length, 4)},1fr);">
+      ${p.metrics.map(m => `<div class="metric-box"><div class="metric-val" style="color:${p.color};text-shadow:0 0 12px ${p.glow};">${m.value}</div><div class="metric-lbl">${m.label}</div></div>`).join('')}
+    </div>`: '';
+      const techBadges = p.tech.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;">${p.tech.map(t => `<span style="font-size:.65rem;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#71717a;">${t}</span>`).join('')}</div>` : '';
+      content.innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
+      <div style="width:40px;height:40px;border-radius:50%;background:${p.gradient};flex-shrink:0;box-shadow:0 0 14px ${p.glow};"></div>
+      <div style="flex:1;">
+        <div style="font-family:Orbitron,monospace;font-size:1rem;font-weight:700;color:#fff;">${p.company}</div>
+        ${p.subtitle ? `<div style="font-size:.65rem;color:#52525b;">${p.subtitle}</div>` : ''}
+      </div>
+      <span style="font-size:.62rem;padding:4px 10px;border-radius:20px;border:1px solid ${p.glow.replace(/[\d.]+\)$/, '.35)')};color:${p.color};background:${p.glow.replace(/[\d.]+\)$/, '.08)')};">${p.type}</span>
+    </div>
+    <p style="font-family:JetBrains Mono,monospace;font-size:.75rem;color:#71717a;margin-bottom:2px;">${p.role}</p>
+    <p style="font-family:JetBrains Mono,monospace;font-size:.68rem;color:#3f3f46;margin-bottom:${p.metrics.length ? 0 : 16}px;">${p.period}</p>
+    ${metricsGrid}
+    <ul style="margin-top:${p.metrics.length ? 0 : 0}px;">${p.bullets.map(b => `<li class="bullet-item"><span style="color:${p.color};flex-shrink:0;">▹</span>${b}</li>`).join('')}</ul>
+    ${techBadges}`;
+      modal.style.display = 'flex';
+      gsap.from(card, { scale: .88, opacity: 0, duration: .32, ease: 'back.out(1.4)' });
+    }
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('planetModal').addEventListener('click', e => { if (e.target === document.getElementById('planetModal')) closeModal(); });
+    function closeModal() {
+      gsap.to(document.getElementById('modalCard'), { scale: .9, opacity: 0, duration: .2, onComplete: () => { document.getElementById('planetModal').style.display = 'none'; gsap.set(document.getElementById('modalCard'), { scale: 1, opacity: 1 }); } });
+    }
+    // ── end space journey ──
+
+    // Mobile menu
+    document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('hidden'));
+    document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => document.getElementById('mobileMenu').classList.add('hidden')));
+
+    // Back to top
+    const btt = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => { btt.style.display = window.scrollY > 400 ? 'flex' : 'none'; });
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Nav border on scroll
+    window.addEventListener('scroll', () => { document.getElementById('navbar').style.borderBottomColor = window.scrollY > 50 ? 'rgba(16,185,129,.15)' : 'rgba(255,255,255,.05)'; });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }); });
   </script>
 </body>
 
