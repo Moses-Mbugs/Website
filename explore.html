@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,401 +11,665 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap"
+    rel="stylesheet" />
   <link rel="icon" href="images/favicon.ico" />
   <style>
     :root {
-      --em: #10b981; --em-dim: rgba(16,185,129,.12); --em-glow: rgba(16,185,129,.25);
-      --g2: #1a1a1a; --g3: #252525;
-      --border: rgba(255,255,255,.07); --border-h: rgba(16,185,129,.4);
+      --em: #10b981;
+      --em-dim: rgba(16, 185, 129, .12);
+      --em-glow: rgba(16, 185, 129, .25);
+      --g2: #1a1a1a;
+      --g3: #252525;
+      --border: rgba(255, 255, 255, .07);
+      --border-h: rgba(16, 185, 129, .4);
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: #080808; color: #e4e4e7; font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
-    .glass { background: rgba(255,255,255,.02); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); transition: border-color .3s, box-shadow .3s; }
-    .glass:hover { border-color: var(--border-h); box-shadow: 0 0 28px var(--em-glow); }
-    .font-orb { font-family: 'Orbitron', monospace; }
-    .em { color: var(--em); }
-    .tag { display: inline-block; font-size: .68rem; padding: 3px 8px; border-radius: 4px; border: 1px solid; }
-    .tag-em   { background: rgba(16,185,129,.08); border-color: rgba(16,185,129,.25); color: var(--em); }
-    .tag-blue { background: rgba(96,165,250,.08); border-color: rgba(96,165,250,.25); color: #60a5fa; }
-    .tag-yel  { background: rgba(251,191,36,.08); border-color: rgba(251,191,36,.25); color: #fbbf24; }
-    .phone-frame { width: 220px; height: 440px; border-radius: 30px; border: 2px solid #2a2a2a; background: #090909; position: relative; overflow: hidden; box-shadow: 0 0 0 1px rgba(255,255,255,.04), 0 24px 60px rgba(0,0,0,.7), 0 0 28px rgba(16,185,129,.1); }
-    .phone-frame::before { content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 52px; height: 4px; background: #1e1e1e; border-radius: 2px; z-index: 10; }
-    .app-tab { cursor: pointer; padding: 7px 18px; border-radius: 8px; font-size: .72rem; border: 1px solid rgba(255,255,255,.07); transition: all .2s; color: #71717a; background: transparent; }
-    .app-tab.active { border-color: var(--em); color: var(--em); background: var(--em-dim); }
-    .app-tab:hover:not(.active) { border-color: rgba(255,255,255,.14); color: #e4e4e7; }
-    .photo-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
-    @media(max-width:640px) { .photo-grid { grid-template-columns: repeat(2,1fr); } }
-    .photo-cell { aspect-ratio: 1; overflow: hidden; border-radius: 10px; position: relative; background: var(--g2); cursor: pointer; }
-    .photo-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
-    .photo-cell:hover img { transform: scale(1.06); }
-    .photo-cell .overlay { position: absolute; inset: 0; background: rgba(16,185,129,.08); opacity: 0; transition: opacity .3s; display: flex; align-items: center; justify-content: center; }
-    .photo-cell:hover .overlay { opacity: 1; }
-    .recipe-card { transition: transform .3s, box-shadow .3s; }
-    .recipe-card:hover { transform: translateY(-5px); box-shadow: 0 18px 40px rgba(16,185,129,.12); }
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-track { background: #080808; }
-    ::-webkit-scrollbar-thumb { background: var(--em); border-radius: 2px; }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #080808;
+      color: #e4e4e7;
+      font-family: 'JetBrains Mono', monospace;
+      overflow-x: hidden;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, .02);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      transition: border-color .3s, box-shadow .3s;
+    }
+
+    .glass:hover {
+      border-color: var(--border-h);
+      box-shadow: 0 0 28px var(--em-glow);
+    }
+
+    .font-orb {
+      font-family: 'Orbitron', monospace;
+    }
+
+    .em {
+      color: var(--em);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: .68rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid;
+    }
+
+    .tag-em {
+      background: rgba(16, 185, 129, .08);
+      border-color: rgba(16, 185, 129, .25);
+      color: var(--em);
+    }
+
+    .tag-blue {
+      background: rgba(96, 165, 250, .08);
+      border-color: rgba(96, 165, 250, .25);
+      color: #60a5fa;
+    }
+
+    .tag-yel {
+      background: rgba(251, 191, 36, .08);
+      border-color: rgba(251, 191, 36, .25);
+      color: #fbbf24;
+    }
+
+    .phone-frame {
+      width: 220px;
+      height: 440px;
+      border-radius: 30px;
+      border: 2px solid #2a2a2a;
+      background: #090909;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, .04), 0 24px 60px rgba(0, 0, 0, .7), 0 0 28px rgba(16, 185, 129, .1);
+    }
+
+    .phone-frame::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 52px;
+      height: 4px;
+      background: #1e1e1e;
+      border-radius: 2px;
+      z-index: 10;
+    }
+
+    .app-tab {
+      cursor: pointer;
+      padding: 7px 18px;
+      border-radius: 8px;
+      font-size: .72rem;
+      border: 1px solid rgba(255, 255, 255, .07);
+      transition: all .2s;
+      color: #71717a;
+      background: transparent;
+    }
+
+    .app-tab.active {
+      border-color: var(--em);
+      color: var(--em);
+      background: var(--em-dim);
+    }
+
+    .app-tab:hover:not(.active) {
+      border-color: rgba(255, 255, 255, .14);
+      color: #e4e4e7;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    @media(max-width:640px) {
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .photo-cell {
+      aspect-ratio: 1;
+      overflow: hidden;
+      border-radius: 10px;
+      position: relative;
+      background: var(--g2);
+      cursor: pointer;
+    }
+
+    .photo-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s;
+    }
+
+    .photo-cell:hover img {
+      transform: scale(1.06);
+    }
+
+    .photo-cell .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(16, 185, 129, .08);
+      opacity: 0;
+      transition: opacity .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-cell:hover .overlay {
+      opacity: 1;
+    }
+
+    .recipe-card {
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .recipe-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 40px rgba(16, 185, 129, .12);
+    }
+
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #080808;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--em);
+      border-radius: 2px;
+    }
   </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300"
-  style="background:rgba(8,8,8,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    <a href="index.html" class="font-orb text-base font-bold">
-      <span class="em">Moses</span><span class="text-zinc-500">Mbugua</span><span class="em">._</span>
-    </a>
-    <nav class="hidden md:flex items-center gap-1 text-xs">
-      <a href="index.html#home"         class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">// home</a>
-      <a href="index.html#expertise"    class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">// expertise</a>
-      <a href="index.html#projects"     class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">// work</a>
-      <a href="index.html#experience"   class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">// journey</a>
-      <a href="index.html#contact"      class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">// contact</a>
-      <span class="px-3 py-1.5 rounded text-xs font-medium" style="background:var(--em-dim);border:1px solid rgba(16,185,129,.3);color:var(--em);">// explore</span>
-    </nav>
-    <button id="menuBtn" class="md:hidden text-zinc-500 hover:text-white transition"><i class="fas fa-bars"></i></button>
-  </div>
-  <div id="mobileMenu" class="hidden md:hidden border-t border-white/5 px-6 py-4 grid grid-cols-2 gap-2 text-xs">
-    <a href="index.html#home"       class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">// home</a>
-    <a href="index.html#expertise"  class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">// expertise</a>
-    <a href="index.html#projects"   class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">// work</a>
-    <a href="index.html#experience" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">// journey</a>
-    <a href="index.html#contact"    class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">// contact</a>
-    <span class="px-3 py-2 rounded text-center" style="background:var(--em-dim);border:1px solid rgba(16,185,129,.3);color:var(--em);">// explore</span>
-  </div>
-</header>
-
-<!-- PAGE HERO -->
-<section class="pt-32 pb-12 px-6" style="background:#080808;">
-  <div class="max-w-6xl mx-auto">
-    <p class="em text-xs font-mono mb-2">// explore</p>
-    <h1 class="font-orb text-5xl font-black text-white mb-3">Beyond the Code</h1>
-    <p class="text-zinc-500 text-sm max-w-xl">Apps, photography, and food — the other things that make me, me.</p>
-    <div class="flex gap-3 mt-6 text-xs font-mono text-zinc-600">
-      <a href="#apps"         class="hover:text-emerald-400 transition">[ apps ]</a>
-      <a href="#photography"  class="hover:text-emerald-400 transition">[ lens ]</a>
-      <a href="#food"         class="hover:text-emerald-400 transition">[ kitchen ]</a>
+  <!-- NAV -->
+  <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300"
+    style="background:rgba(8,8,8,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="font-orb text-base font-bold">
+        <span class="em">Moses</span><span class="text-zinc-500">Mbugua</span><span class="em">._</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-1 text-xs">
+        <a href="index.html#home" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">//
+          home</a>
+        <a href="index.html#expertise" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">//
+          expertise</a>
+        <a href="index.html#projects" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">//
+          work</a>
+        <a href="index.html#experience" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">//
+          journey</a>
+        <a href="index.html#contact" class="px-3 py-1.5 text-zinc-500 hover:text-emerald-400 transition rounded">//
+          contact</a>
+        <span class="px-3 py-1.5 rounded text-xs font-medium"
+          style="background:var(--em-dim);border:1px solid rgba(16,185,129,.3);color:var(--em);">// explore</span>
+      </nav>
+      <button id="menuBtn" class="md:hidden text-zinc-500 hover:text-white transition"><i
+          class="fas fa-bars"></i></button>
     </div>
-  </div>
-</section>
-
-<!-- ═══ APPS ═══ -->
-<section id="apps" class="py-24 px-6" style="background:linear-gradient(180deg,#080808 0%,#0a0a0a 100%);">
-  <div class="max-w-6xl mx-auto">
-    <div class="mb-14 gsap-reveal">
-      <p class="em text-xs font-mono mb-2">// 01 — apps</p>
-      <h2 class="font-orb text-4xl font-bold text-white">My Apps</h2>
-      <p class="text-zinc-600 text-sm mt-2">Shipped products you can download today.</p>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-white/5 px-6 py-4 grid grid-cols-2 gap-2 text-xs">
+      <a href="index.html#home" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">//
+        home</a>
+      <a href="index.html#expertise" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">//
+        expertise</a>
+      <a href="index.html#projects" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">//
+        work</a>
+      <a href="index.html#experience" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">//
+        journey</a>
+      <a href="index.html#contact" class="px-3 py-2 glass rounded text-zinc-400 hover:text-emerald-400 transition">//
+        contact</a>
+      <span class="px-3 py-2 rounded text-center"
+        style="background:var(--em-dim);border:1px solid rgba(16,185,129,.3);color:var(--em);">// explore</span>
     </div>
+  </header>
 
-    <div class="flex gap-3 mb-8 gsap-reveal">
-      <button class="app-tab active" data-app="mzalendo">Mzalendo</button>
-      <button class="app-tab" data-app="skycast">SkyCast</button>
-      <button class="app-tab" data-app="random">Jijitsu</button>
-      <button class="app-tab" data-app="irio">Irio</button>
-    </div>
-
-    <!-- Mzalendo -->
-    <div id="app-mzalendo" class="app-panel gsap-reveal">
-      <div class="glass rounded-2xl p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <div class="flex items-center gap-3 mb-5">
-            <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:linear-gradient(135deg,rgba(16,185,129,.25),rgba(16,185,129,.08));border:1px solid rgba(16,185,129,.3);">
-              <i class="fas fa-gamepad em"></i>
-            </div>
-            <div><h3 class="font-orb text-xl font-bold text-white">Mzalendo</h3><p class="text-zinc-600 text-xs">Android • Kotlin</p></div>
-          </div>
-          <p class="text-zinc-500 text-sm leading-relaxed mb-6">A Kenyan trivia quiz game covering culture, history, geography, and humor. Test how much you know about Kenya — from Nairobi streets to Kiswahili proverbs. 200+ downloads in the first 24 hours.</p>
-          <ul class="space-y-2 mb-8">
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs em"></i><span class="text-zinc-300">10+ quiz categories</span></li>
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs em"></i><span class="text-zinc-300">Score tracking & leaderboard</span></li>
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs em"></i><span class="text-zinc-300">Live on Google Play Store</span></li>
-          </ul>
-          <a href="https://play.google.com/store/apps/details?id=com.mzalendo.quizapp&hl=en" target="_blank"
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm text-black transition hover:opacity-85"
-            style="background:var(--em);box-shadow:0 4px 20px rgba(16,185,129,.28);">
-            <i class="fab fa-google-play"></i> Play Store
-          </a>
-        </div>
-        <div class="flex justify-center">
-          <div class="phone-frame">
-            <div class="app-slideshow w-full h-full relative" data-app-id="mzalendo">
-              <img src="images/mzalendo1.jpg" alt="Mzalendo 1" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
-              <img src="images/mzalendo2.jpg" alt="Mzalendo 2" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
-              <img src="images/mzalendo3.jpg" alt="Mzalendo 3" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
-              <img src="images/mzalendo4.jpg" alt="Mzalendo 4" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
-              <img src="images/mzalendo5.jpg" alt="Mzalendo 5" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
-            </div>
-          </div>
-        </div>
+  <!-- PAGE HERO -->
+  <section class="pt-32 pb-12 px-6" style="background:#080808;">
+    <div class="max-w-6xl mx-auto">
+      <p class="em text-xs font-mono mb-2">// explore</p>
+      <h1 class="font-orb text-5xl font-black text-white mb-3">Beyond the Code</h1>
+      <p class="text-zinc-500 text-sm max-w-xl">Apps, photography, and food — the other things that make me, me.</p>
+      <div class="flex gap-3 mt-6 text-xs font-mono text-zinc-600">
+        <a href="#apps" class="hover:text-emerald-400 transition">[ apps ]</a>
+        <a href="#photography" class="hover:text-emerald-400 transition">[ lens ]</a>
+        <a href="#food" class="hover:text-emerald-400 transition">[ kitchen ]</a>
       </div>
     </div>
+  </section>
 
-    <!-- SkyCast -->
-    <div id="app-skycast" class="app-panel hidden">
-      <div class="glass rounded-2xl p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <div class="flex items-center gap-3 mb-5">
-            <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:linear-gradient(135deg,rgba(96,165,250,.25),rgba(96,165,250,.08));border:1px solid rgba(96,165,250,.3);">
-              <i class="fas fa-cloud-sun text-blue-400"></i>
-            </div>
-            <div><h3 class="font-orb text-xl font-bold text-white">SkyCast</h3><p class="text-zinc-600 text-xs">Android • Flutter</p></div>
-          </div>
-          <p class="text-zinc-500 text-sm leading-relaxed mb-6">Real-time weather app powered by OpenWeatherAPI. Clean, minimal UI with current conditions, hourly forecasts, and location-based detection.</p>
-          <ul class="space-y-2 mb-8">
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-blue-400"></i><span class="text-zinc-300">Real-time weather data</span></li>
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-blue-400"></i><span class="text-zinc-300">Location-based detection</span></li>
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-blue-400"></i><span class="text-zinc-300">Minimal, clean interface</span></li>
-          </ul>
-          <a href="assets/Sky_cast.apk" download class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm text-white transition hover:opacity-85" style="background:#3b82f6;box-shadow:0 4px 20px rgba(59,130,246,.28);">
-            <i class="fas fa-download"></i> Download APK
-          </a>
-        </div>
-        <div class="flex justify-center">
-          <div class="phone-frame"><img src="images/skycast.jpg" alt="SkyCast" class="w-full h-full object-cover" /></div>
-        </div>
+  <!-- ═══ APPS ═══ -->
+  <section id="apps" class="py-24 px-6" style="background:linear-gradient(180deg,#080808 0%,#0a0a0a 100%);">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-14 gsap-reveal">
+        <p class="em text-xs font-mono mb-2">// 01 — apps</p>
+        <h2 class="font-orb text-4xl font-bold text-white">My Apps</h2>
+        <p class="text-zinc-600 text-sm mt-2">Shipped products you can download today.</p>
       </div>
-    </div>
 
-    <!-- Jijitsu -->
-    <div id="app-random" class="app-panel hidden">
-      <div class="glass rounded-2xl p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <div class="flex items-center gap-3 mb-5">
-            <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:linear-gradient(135deg,rgba(251,191,36,.25),rgba(251,191,36,.08));border:1px solid rgba(251,191,36,.3);">
-              <i class="fas fa-dice text-yellow-400"></i>
-            </div>
-            <div><h3 class="font-orb text-xl font-bold text-white">Jijitsu</h3><p class="text-zinc-600 text-xs">Android • Flutter</p></div>
-          </div>
-          <p class="text-zinc-500 text-sm leading-relaxed mb-6">A "Did You Know?" facts app with a bold Retro-Neobrutalism aesthetic. Explore random facts across science, history, nature, and more.</p>
-          <ul class="space-y-2 mb-8">
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-yellow-400"></i><span class="text-zinc-300">Retro-Neobrutalism design</span></li>
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-yellow-400"></i><span class="text-zinc-300">Multiple fact categories</span></li>
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-yellow-400"></i><span class="text-zinc-300">Share facts with friends</span></li>
-          </ul>
-          <span class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm glass text-zinc-500">
-            <i class="fas fa-clock text-xs"></i> Coming Soon
-          </span>
-        </div>
-        <div class="flex justify-center">
-          <div class="phone-frame"><img src="images/random.png" alt="Random App" class="w-full h-full object-cover" /></div>
-        </div>
+      <div class="flex gap-3 mb-8 gsap-reveal">
+        <button class="app-tab active" data-app="mzalendo">Mzalendo</button>
+        <button class="app-tab" data-app="skycast">SkyCast</button>
+        <button class="app-tab" data-app="random">Jijitsu</button>
+        <button class="app-tab" data-app="irio">Irio</button>
       </div>
-    <!-- Irio -->
-    <div id="app-irio" class="app-panel hidden">
-      <div class="glass rounded-2xl p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <div class="flex items-center gap-3 mb-5">
-            <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:linear-gradient(135deg,rgba(16,185,129,.25),rgba(16,185,129,.08));border:1px solid rgba(16,185,129,.3);">
-              <i class="fas fa-leaf em"></i>
+
+      <!-- Mzalendo -->
+      <div id="app-mzalendo" class="app-panel gsap-reveal">
+        <div class="glass rounded-2xl p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center"
+                style="background:linear-gradient(135deg,rgba(16,185,129,.25),rgba(16,185,129,.08));border:1px solid rgba(16,185,129,.3);">
+                <i class="fas fa-gamepad em"></i>
+              </div>
+              <div>
+                <h3 class="font-orb text-xl font-bold text-white">Mzalendo</h3>
+                <p class="text-zinc-600 text-xs">Android • Kotlin</p>
+              </div>
             </div>
-            <div>
-              <h3 class="font-orb text-xl font-bold text-white">Irio</h3>
-              <p class="text-zinc-600 text-xs">Android • Kudimbua.tech</p>
-            </div>
-          </div>
-          <p class="text-zinc-500 text-sm leading-relaxed mb-4">A project built under <span class="em font-medium">Kudimbua.tech</span> — visit the site to learn more and get the full experience. The APK is available for direct download from the website.</p>
-          <p class="text-xs font-mono p-3 rounded-lg mb-6" style="background:rgba(16,185,129,.05);border-left:2px solid var(--em);color:#6ee7b7;">
-            ▹ Built and hosted at kudimbua.tech
-          </p>
-          <ul class="space-y-2 mb-8">
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs em"></i><span class="text-zinc-300">Full APK available for download</span></li>
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs em"></i><span class="text-zinc-300">Android app</span></li>
-            <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs em"></i><span class="text-zinc-300">Visit kudimbua.tech for details</span></li>
-          </ul>
-          <div class="flex flex-wrap gap-3">
-            <a href="https://kudimbua.tech" target="_blank"
+            <p class="text-zinc-500 text-sm leading-relaxed mb-6">A Kenyan trivia quiz game covering culture, history,
+              geography, and humor. Test how much you know about Kenya — from Nairobi streets to Kiswahili proverbs.
+              200+ downloads in the first 24 hours.</p>
+            <ul class="space-y-2 mb-8">
+              <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs em"></i><span
+                  class="text-zinc-300">10+ quiz categories</span></li>
+              <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs em"></i><span
+                  class="text-zinc-300">Score tracking & leaderboard</span></li>
+              <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs em"></i><span
+                  class="text-zinc-300">Live on Google Play Store</span></li>
+            </ul>
+            <a href="https://play.google.com/store/apps/details?id=com.mzalendo.quizapp&hl=en" target="_blank"
               class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm text-black transition hover:opacity-85"
               style="background:var(--em);box-shadow:0 4px 20px rgba(16,185,129,.28);">
-              <i class="fas fa-globe"></i> Visit kudimbua.tech
-            </a>
-            <a href="https://kudimbua.tech" target="_blank"
-              class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm glass text-zinc-300 transition hover:text-white">
-              <i class="fas fa-download text-xs em"></i> Download APK
+              <i class="fab fa-google-play"></i> Play Store
             </a>
           </div>
-        </div>
-        <div class="flex justify-center">
-          <div class="phone-frame">
-            <div class="irio-slideshow w-full h-full relative">
-              <img src="images/irio1.png" alt="Irio 1" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
-              <img src="images/irio2.png" alt="Irio 2" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
-              <img src="images/irio3.png" alt="Irio 3" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
-              <img src="images/irio4.png" alt="Irio 4" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
-              <img src="images/irio5.png" alt="Irio 5" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+          <div class="flex justify-center">
+            <div class="phone-frame">
+              <div class="app-slideshow w-full h-full relative" data-app-id="mzalendo">
+                <img src="images/mzalendo1.jpg" alt="Mzalendo 1"
+                  class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                <img src="images/mzalendo2.jpg" alt="Mzalendo 2"
+                  class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                <img src="images/mzalendo3.jpg" alt="Mzalendo 3"
+                  class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                <img src="images/mzalendo4.jpg" alt="Mzalendo 4"
+                  class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                <img src="images/mzalendo5.jpg" alt="Mzalendo 5"
+                  class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    </div>
-  </div>
-</section>
 
-<!-- ═══ PHOTOGRAPHY ═══ -->
-<section id="photography" class="py-24 px-6" style="background:#080808;">
-  <div class="max-w-6xl mx-auto">
-    <div class="mb-14 gsap-reveal">
-      <p class="em text-xs font-mono mb-2">// 02 — lens</p>
-      <h2 class="font-orb text-4xl font-bold text-white">Through the Lens</h2>
-      <p class="text-zinc-600 text-sm mt-2">Moments captured. Stories told in light.</p>
-    </div>
-
-    <div class="photo-grid gsap-reveal" id="photoGrid">
-      <div class="photo-cell"><img src="images/photo-1.jpg" alt="Photo 1" onerror="this.style.display='none'" /><div class="overlay"><i class="fas fa-expand text-white"></i></div></div>
-      <div class="photo-cell" style="grid-row:span 2;"><img src="images/photo-2.jpg" alt="Photo 2" onerror="this.style.display='none'" /><div class="overlay"><i class="fas fa-expand text-white"></i></div></div>
-      <div class="photo-cell"><img src="images/photo-3.jpg" alt="Photo 3" onerror="this.style.display='none'" /><div class="overlay"><i class="fas fa-expand text-white"></i></div></div>
-      <div class="photo-cell"><img src="images/photo-4.jpg" alt="Photo 4" onerror="this.style.display='none'" /><div class="overlay"><i class="fas fa-expand text-white"></i></div></div>
-      <div class="photo-cell"><img src="images/photo-5.jpg" alt="Photo 5" onerror="this.style.display='none'" /><div class="overlay"><i class="fas fa-expand text-white"></i></div></div>
-      <div class="photo-cell"><img src="images/photo-6.jpg" alt="Photo 6" onerror="this.style.display='none'" /><div class="overlay"><i class="fas fa-expand text-white"></i></div></div>
-      <div class="photo-cell"><img src="images/photo-7.jpg" alt="Photo 7" onerror="this.style.display='none'" /><div class="overlay"><i class="fas fa-expand text-white"></i></div></div>
-      <div class="photo-cell"><img src="images/photo-8.jpg" alt="Photo 8" onerror="this.style.display='none'" /><div class="overlay"><i class="fas fa-expand text-white"></i></div></div>
-      <div class="photo-cell"><img src="images/photo-9.jpg" alt="Photo 9" onerror="this.style.display='none'" /><div class="overlay"><i class="fas fa-expand text-white"></i></div></div>
-    </div>
-    <p class="text-zinc-700 text-xs font-mono text-center mt-6 gsap-reveal">// drop your photos into images/ as photo-1.jpg through photo-9.jpg</p>
-  </div>
-
-  <!-- Lightbox -->
-  <div id="lightbox" style="display:none;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;background:rgba(0,0,0,.96);">
-    <button id="closeLightbox" style="position:absolute;top:24px;right:24px;background:none;border:none;color:#71717a;font-size:1.4rem;cursor:pointer;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#71717a'"><i class="fas fa-times"></i></button>
-    <img id="lightboxImg" src="" alt="" style="max-width:90vw;max-height:90vh;object-fit:contain;border-radius:12px;" />
-  </div>
-</section>
-
-<!-- ═══ KITCHEN ═══ -->
-<section id="food" class="py-24 px-6" style="background:#0d0d0d;">
-  <div class="max-w-6xl mx-auto">
-    <div class="mb-14 gsap-reveal">
-      <p class="em text-xs font-mono mb-2">// 03 — kitchen</p>
-      <h2 class="font-orb text-4xl font-bold text-white">The Kitchen Lab</h2>
-      <p class="text-zinc-600 text-sm mt-2">Cooking is just chemistry you can eat. Here are some of my favorite builds.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="glass rounded-2xl overflow-hidden recipe-card gsap-reveal">
-        <div class="relative h-52" style="background:linear-gradient(135deg,#1a0800,#2d1200);">
-          <img src="images/recipe-1.jpg" alt="Nyama Choma" class="w-full h-full object-cover absolute inset-0" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><i class="fas fa-drumstick-bite text-5xl" style="color:rgba(251,146,60,.3);"></i></div>
-          <span class="absolute top-3 right-3 tag" style="background:rgba(251,146,60,.12);border-color:rgba(251,146,60,.3);color:#fb923c;">Kenyan</span>
-        </div>
-        <div class="p-6">
-          <h3 class="font-orb text-xs font-bold text-white mb-2">Nyama Choma + Kachumbari</h3>
-          <p class="text-zinc-600 text-xs mb-4 leading-relaxed">The classic. Grilled goat meat with fresh tomato-onion salsa. Simple, smoky, and undefeated.</p>
-          <div class="flex items-center gap-4 text-xs text-zinc-700">
-            <span><i class="fas fa-clock mr-1"></i>2 hrs</span>
-            <span><i class="fas fa-fire-alt mr-1"></i>Grill</span>
-            <span class="em font-mono">● Easy</span>
+      <!-- SkyCast -->
+      <div id="app-skycast" class="app-panel hidden">
+        <div class="glass rounded-2xl p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center"
+                style="background:linear-gradient(135deg,rgba(96,165,250,.25),rgba(96,165,250,.08));border:1px solid rgba(96,165,250,.3);">
+                <i class="fas fa-cloud-sun text-blue-400"></i>
+              </div>
+              <div>
+                <h3 class="font-orb text-xl font-bold text-white">SkyCast</h3>
+                <p class="text-zinc-600 text-xs">Android • Flutter</p>
+              </div>
+            </div>
+            <p class="text-zinc-500 text-sm leading-relaxed mb-6">Real-time weather app powered by OpenWeatherAPI.
+              Clean, minimal UI with current conditions, hourly forecasts, and location-based detection.</p>
+            <ul class="space-y-2 mb-8">
+              <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-blue-400"></i><span
+                  class="text-zinc-300">Real-time weather data</span></li>
+              <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-blue-400"></i><span
+                  class="text-zinc-300">Location-based detection</span></li>
+              <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-blue-400"></i><span
+                  class="text-zinc-300">Minimal, clean interface</span></li>
+            </ul>
+            <a href="assets/Sky_cast.apk" download
+              class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm text-white transition hover:opacity-85"
+              style="background:#3b82f6;box-shadow:0 4px 20px rgba(59,130,246,.28);">
+              <i class="fas fa-download"></i> Download APK
+            </a>
+          </div>
+          <div class="flex justify-center">
+            <div class="phone-frame"><img src="images/skycast.jpg" alt="SkyCast" class="w-full h-full object-cover" />
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="glass rounded-2xl overflow-hidden recipe-card gsap-reveal">
-        <div class="relative h-52" style="background:linear-gradient(135deg,#0a1800,#0d2400);">
-          <img src="images/recipe-2.jpg" alt="Pilau" class="w-full h-full object-cover absolute inset-0" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><i class="fas fa-pepper-hot text-5xl" style="color:rgba(34,197,94,.3);"></i></div>
-          <span class="absolute top-3 right-3 tag tag-em">Fusion</span>
-        </div>
-        <div class="p-6">
-          <h3 class="font-orb text-xs font-bold text-white mb-2">Pilau wa Nairobi</h3>
-          <p class="text-zinc-600 text-xs mb-4 leading-relaxed">Fragrant rice cooked in whole spices — cardamom, cumin, cinnamon — with tender beef.</p>
-          <div class="flex items-center gap-4 text-xs text-zinc-700">
-            <span><i class="fas fa-clock mr-1"></i>1.5 hrs</span>
-            <span><i class="fas fa-fire-alt mr-1"></i>Stovetop</span>
-            <span class="text-yellow-500 font-mono">● Medium</span>
+      <!-- Jijitsu -->
+      <div id="app-random" class="app-panel hidden">
+        <div class="glass rounded-2xl p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center"
+                style="background:linear-gradient(135deg,rgba(251,191,36,.25),rgba(251,191,36,.08));border:1px solid rgba(251,191,36,.3);">
+                <i class="fas fa-dice text-yellow-400"></i>
+              </div>
+              <div>
+                <h3 class="font-orb text-xl font-bold text-white">Jijitsu</h3>
+                <p class="text-zinc-600 text-xs">Android • Flutter</p>
+              </div>
+            </div>
+            <p class="text-zinc-500 text-sm leading-relaxed mb-6">A "Did You Know?" facts app with a bold
+              Retro-Neobrutalism aesthetic. Explore random facts across science, history, nature, and more.</p>
+            <ul class="space-y-2 mb-8">
+              <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-yellow-400"></i><span
+                  class="text-zinc-300">Retro-Neobrutalism design</span></li>
+              <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-yellow-400"></i><span
+                  class="text-zinc-300">Multiple fact categories</span></li>
+              <li class="flex items-center gap-3 text-sm"><i class="fas fa-check text-xs text-yellow-400"></i><span
+                  class="text-zinc-300">Share facts with friends</span></li>
+            </ul>
+            <span class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm glass text-zinc-500">
+              <i class="fas fa-clock text-xs"></i> Coming Soon
+            </span>
+          </div>
+          <div class="flex justify-center">
+            <div class="phone-frame"><img src="images/random.png" alt="Random App" class="w-full h-full object-cover" />
+            </div>
           </div>
         </div>
+        <!-- Irio -->
+        <div id="app-irio" class="app-panel hidden">
+          <div class="glass rounded-2xl p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div class="flex items-center gap-3 mb-5">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center"
+                  style="background:linear-gradient(135deg,rgba(16,185,129,.25),rgba(16,185,129,.08));border:1px solid rgba(16,185,129,.3);">
+                  <i class="fas fa-leaf em"></i>
+                </div>
+                <div>
+                  <h3 class="font-orb text-xl font-bold text-white">Irio</h3>
+                  <p class="text-zinc-600 text-xs">Android • AI-Powered</p>
+                </div>
+              </div>
+              <p class="text-zinc-500 text-sm leading-relaxed mb-6">Cook with what you have. Pick the ingredients
+                sitting in your fridge — Irio uses AI to suggest meals you can actually make. No recipe hunting, no
+                waste, no stress.</p>
+              <ul class="space-y-4 mb-8">
+                <li class="flex items-start gap-3">
+                  <i class="fas fa-utensils text-xs em mt-1 flex-shrink-0"></i>
+                  <div><span class="text-zinc-300 text-sm font-medium">Cook with what you have</span><br><span
+                      class="text-zinc-600 text-xs">AI suggests meals from your fridge ingredients — no recipe hunting,
+                      no waste.</span></div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <i class="fas fa-calendar-week text-xs em mt-1 flex-shrink-0"></i>
+                  <div><span class="text-zinc-300 text-sm font-medium">Plan your whole week</span><br><span
+                      class="text-zinc-600 text-xs">Generate a complete 7-day meal plan in seconds — breakfast, lunch
+                      and dinner picked, balanced and varied automatically.</span></div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <i class="fas fa-cocktail text-xs em mt-1 flex-shrink-0"></i>
+                  <div><span class="text-zinc-300 text-sm font-medium">Cocktails & Mocktails</span><br><span
+                      class="text-zinc-600 text-xs">From a classic Dawa to a Passion Mojito — drink recipes for every
+                      mood, occasion and guest list.</span></div>
+                </li>
+              </ul>
+              <div class="flex flex-wrap gap-3">
+                <a href="https://kudimbua.tech" target="_blank"
+                  class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm text-black transition hover:opacity-85"
+                  style="background:var(--em);box-shadow:0 4px 20px rgba(16,185,129,.28);">
+                  <i class="fas fa-globe"></i> Visit kudimbua.tech
+                </a>
+                <a href="https://kudimbua.tech" target="_blank"
+                  class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm glass text-zinc-300 transition hover:text-white">
+                  <i class="fas fa-download text-xs em"></i> Download APK
+                </a>
+              </div>
+            </div>
+            <div class="flex justify-center">
+              <div class="phone-frame">
+                <div class="irio-slideshow w-full h-full relative">
+                  <img src="images/irio1.png" alt="Irio 1"
+                    class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                  <img src="images/irio2.png" alt="Irio 2"
+                    class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                  <img src="images/irio3.png" alt="Irio 3"
+                    class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                  <img src="images/irio4.png" alt="Irio 4"
+                    class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                  <img src="images/irio5.png" alt="Irio 5"
+                    class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- ═══ PHOTOGRAPHY ═══ -->
+  <section id="photography" class="py-24 px-6" style="background:#080808;">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-14 gsap-reveal">
+        <p class="em text-xs font-mono mb-2">// 02 — lens</p>
+        <h2 class="font-orb text-4xl font-bold text-white">Through the Lens</h2>
+        <p class="text-zinc-600 text-sm mt-2">Moments captured. Stories told in light.</p>
       </div>
 
-      <div class="glass rounded-2xl overflow-hidden recipe-card gsap-reveal">
-        <div class="relative h-52" style="background:linear-gradient(135deg,#08081a,#001018);">
-          <img src="images/recipe-3.jpg" alt="Maandazi" class="w-full h-full object-cover absolute inset-0" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><i class="fas fa-cookie-bite text-5xl" style="color:rgba(96,165,250,.3);"></i></div>
-          <span class="absolute top-3 right-3 tag tag-blue">Dessert</span>
+      <div class="photo-grid gsap-reveal" id="photoGrid">
+        <div class="photo-cell"><img src="images/photo-1.jpg" alt="Photo 1" onerror="this.style.display='none'" />
+          <div class="overlay"><i class="fas fa-expand text-white"></i></div>
         </div>
-        <div class="p-6">
-          <h3 class="font-orb text-xs font-bold text-white mb-2">Maandazi & Chai</h3>
-          <p class="text-zinc-600 text-xs mb-4 leading-relaxed">Soft fluffy East African donuts with masala spiced tea. Weekend mornings, done right.</p>
-          <div class="flex items-center gap-4 text-xs text-zinc-700">
-            <span><i class="fas fa-clock mr-1"></i>45 min</span>
-            <span><i class="fas fa-fire-alt mr-1"></i>Pan-fry</span>
-            <span class="em font-mono">● Easy</span>
-          </div>
+        <div class="photo-cell" style="grid-row:span 2;"><img src="images/photo-2.jpg" alt="Photo 2"
+            onerror="this.style.display='none'" />
+          <div class="overlay"><i class="fas fa-expand text-white"></i></div>
+        </div>
+        <div class="photo-cell"><img src="images/photo-3.jpg" alt="Photo 3" onerror="this.style.display='none'" />
+          <div class="overlay"><i class="fas fa-expand text-white"></i></div>
+        </div>
+        <div class="photo-cell"><img src="images/photo-4.jpg" alt="Photo 4" onerror="this.style.display='none'" />
+          <div class="overlay"><i class="fas fa-expand text-white"></i></div>
+        </div>
+        <div class="photo-cell"><img src="images/photo-5.jpg" alt="Photo 5" onerror="this.style.display='none'" />
+          <div class="overlay"><i class="fas fa-expand text-white"></i></div>
+        </div>
+        <div class="photo-cell"><img src="images/photo-6.jpg" alt="Photo 6" onerror="this.style.display='none'" />
+          <div class="overlay"><i class="fas fa-expand text-white"></i></div>
+        </div>
+        <div class="photo-cell"><img src="images/photo-7.jpg" alt="Photo 7" onerror="this.style.display='none'" />
+          <div class="overlay"><i class="fas fa-expand text-white"></i></div>
+        </div>
+        <div class="photo-cell"><img src="images/photo-8.jpg" alt="Photo 8" onerror="this.style.display='none'" />
+          <div class="overlay"><i class="fas fa-expand text-white"></i></div>
+        </div>
+        <div class="photo-cell"><img src="images/photo-9.jpg" alt="Photo 9" onerror="this.style.display='none'" />
+          <div class="overlay"><i class="fas fa-expand text-white"></i></div>
         </div>
       </div>
+      <p class="text-zinc-700 text-xs font-mono text-center mt-6 gsap-reveal">// drop your photos into images/ as
+        photo-1.jpg through photo-9.jpg</p>
     </div>
 
-    <p class="text-center text-zinc-700 text-xs font-mono mt-8 gsap-reveal">// more recipes loading... stay tuned</p>
-  </div>
-</section>
+    <!-- Lightbox -->
+    <div id="lightbox"
+      style="display:none;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;background:rgba(0,0,0,.96);">
+      <button id="closeLightbox"
+        style="position:absolute;top:24px;right:24px;background:none;border:none;color:#71717a;font-size:1.4rem;cursor:pointer;"
+        onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#71717a'"><i
+          class="fas fa-times"></i></button>
+      <img id="lightboxImg" src="" alt=""
+        style="max-width:90vw;max-height:90vh;object-fit:contain;border-radius:12px;" />
+    </div>
+  </section>
 
-<!-- FOOTER -->
-<footer class="py-8 text-center text-xs text-zinc-700 font-mono" style="border-top:1px solid rgba(255,255,255,.04);">
-  <p>© 2026 Moses Mbugua Muigai — Built with passion, powered by caffeine.</p>
-  <p class="mt-1" style="color:rgba(16,185,129,.35);">// EOF</p>
-</footer>
+  <!-- ═══ KITCHEN ═══ -->
+  <section id="food" class="py-24 px-6" style="background:#0d0d0d;">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-14 gsap-reveal">
+        <p class="em text-xs font-mono mb-2">// 03 — kitchen</p>
+        <h2 class="font-orb text-4xl font-bold text-white">The Kitchen Lab</h2>
+        <p class="text-zinc-600 text-sm mt-2">Cooking is just chemistry you can eat. Here are some of my favorite
+          builds.</p>
+      </div>
 
-<button id="backToTop" style="display:none;position:fixed;bottom:32px;right:32px;width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;z-index:50;background:var(--em);color:#000;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(16,185,129,.35);transition:transform .2s;">
-  <i class="fas fa-arrow-up text-sm"></i>
-</button>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass rounded-2xl overflow-hidden recipe-card gsap-reveal">
+          <div class="relative h-52" style="background:linear-gradient(135deg,#1a0800,#2d1200);">
+            <img src="images/recipe-1.jpg" alt="Nyama Choma" class="w-full h-full object-cover absolute inset-0"
+              onerror="this.style.display='none'" />
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><i
+                class="fas fa-drumstick-bite text-5xl" style="color:rgba(251,146,60,.3);"></i></div>
+            <span class="absolute top-3 right-3 tag"
+              style="background:rgba(251,146,60,.12);border-color:rgba(251,146,60,.3);color:#fb923c;">Kenyan</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-orb text-xs font-bold text-white mb-2">Nyama Choma + Kachumbari</h3>
+            <p class="text-zinc-600 text-xs mb-4 leading-relaxed">The classic. Grilled goat meat with fresh tomato-onion
+              salsa. Simple, smoky, and undefeated.</p>
+            <div class="flex items-center gap-4 text-xs text-zinc-700">
+              <span><i class="fas fa-clock mr-1"></i>2 hrs</span>
+              <span><i class="fas fa-fire-alt mr-1"></i>Grill</span>
+              <span class="em font-mono">● Easy</span>
+            </div>
+          </div>
+        </div>
 
-<script>
-gsap.registerPlugin(ScrollTrigger);
+        <div class="glass rounded-2xl overflow-hidden recipe-card gsap-reveal">
+          <div class="relative h-52" style="background:linear-gradient(135deg,#0a1800,#0d2400);">
+            <img src="images/recipe-2.jpg" alt="Pilau" class="w-full h-full object-cover absolute inset-0"
+              onerror="this.style.display='none'" />
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><i
+                class="fas fa-pepper-hot text-5xl" style="color:rgba(34,197,94,.3);"></i></div>
+            <span class="absolute top-3 right-3 tag tag-em">Fusion</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-orb text-xs font-bold text-white mb-2">Pilau wa Nairobi</h3>
+            <p class="text-zinc-600 text-xs mb-4 leading-relaxed">Fragrant rice cooked in whole spices — cardamom,
+              cumin, cinnamon — with tender beef.</p>
+            <div class="flex items-center gap-4 text-xs text-zinc-700">
+              <span><i class="fas fa-clock mr-1"></i>1.5 hrs</span>
+              <span><i class="fas fa-fire-alt mr-1"></i>Stovetop</span>
+              <span class="text-yellow-500 font-mono">● Medium</span>
+            </div>
+          </div>
+        </div>
 
-gsap.utils.toArray('.gsap-reveal').forEach(el=>{
-  gsap.from(el,{scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'},opacity:0,y:28,duration:.7,ease:'power2.out'});
-});
+        <div class="glass rounded-2xl overflow-hidden recipe-card gsap-reveal">
+          <div class="relative h-52" style="background:linear-gradient(135deg,#08081a,#001018);">
+            <img src="images/recipe-3.jpg" alt="Maandazi" class="w-full h-full object-cover absolute inset-0"
+              onerror="this.style.display='none'" />
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><i
+                class="fas fa-cookie-bite text-5xl" style="color:rgba(96,165,250,.3);"></i></div>
+            <span class="absolute top-3 right-3 tag tag-blue">Dessert</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-orb text-xs font-bold text-white mb-2">Maandazi & Chai</h3>
+            <p class="text-zinc-600 text-xs mb-4 leading-relaxed">Soft fluffy East African donuts with masala spiced
+              tea. Weekend mornings, done right.</p>
+            <div class="flex items-center gap-4 text-xs text-zinc-700">
+              <span><i class="fas fa-clock mr-1"></i>45 min</span>
+              <span><i class="fas fa-fire-alt mr-1"></i>Pan-fry</span>
+              <span class="em font-mono">● Easy</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-// Mzalendo slideshow
-const slides=document.querySelectorAll('.app-slideshow img');
-let cur=0;
-const showSlide=i=>slides.forEach((s,idx)=>s.style.opacity=idx===i?'1':'0');
-if(slides.length)showSlide(0);
-setInterval(()=>{cur=(cur+1)%slides.length;showSlide(cur);},3000);
+      <p class="text-center text-zinc-700 text-xs font-mono mt-8 gsap-reveal">// more recipes loading... stay tuned</p>
+    </div>
+  </section>
 
-// Irio slideshow
-const irioSlides=document.querySelectorAll('.irio-slideshow img');
-let irioCur=0;
-const showIrio=i=>irioSlides.forEach((s,idx)=>s.style.opacity=idx===i?'1':'0');
-if(irioSlides.length)showIrio(0);
-setInterval(()=>{irioCur=(irioCur+1)%irioSlides.length;showIrio(irioCur);},3000);
+  <!-- FOOTER -->
+  <footer class="py-8 text-center text-xs text-zinc-700 font-mono" style="border-top:1px solid rgba(255,255,255,.04);">
+    <p>© 2026 Moses Mbugua Muigai .</p>
+    <p class="mt-1" style="color:rgba(16,185,129,.35);">// EOF</p>
+  </footer>
 
-// App tabs
-document.querySelectorAll('.app-tab').forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    document.querySelectorAll('.app-tab').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    document.querySelectorAll('.app-panel').forEach(p=>{
-      const show=p.id==='app-'+tab.dataset.app;
-      p.classList.toggle('hidden',!show);
-      if(show)gsap.from(p,{opacity:0,y:14,duration:.4,ease:'power2.out'});
+  <button id="backToTop"
+    style="display:none;position:fixed;bottom:32px;right:32px;width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;z-index:50;background:var(--em);color:#000;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(16,185,129,.35);transition:transform .2s;">
+    <i class="fas fa-arrow-up text-sm"></i>
+  </button>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray('.gsap-reveal').forEach(el => {
+      gsap.from(el, { scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }, opacity: 0, y: 28, duration: .7, ease: 'power2.out' });
     });
-  });
-});
 
-// Lightbox
-document.querySelectorAll('#photoGrid .photo-cell').forEach(cell=>{
-  cell.addEventListener('click',()=>{
-    const img=cell.querySelector('img');
-    if(!img||img.style.display==='none')return;
-    document.getElementById('lightboxImg').src=img.src;
-    document.getElementById('lightbox').style.display='flex';
-  });
-});
-document.getElementById('closeLightbox').addEventListener('click',()=>{document.getElementById('lightbox').style.display='none';});
-document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))document.getElementById('lightbox').style.display='none';});
+    // Mzalendo slideshow
+    const slides = document.querySelectorAll('.app-slideshow img');
+    let cur = 0;
+    const showSlide = i => slides.forEach((s, idx) => s.style.opacity = idx === i ? '1' : '0');
+    if (slides.length) showSlide(0);
+    setInterval(() => { cur = (cur + 1) % slides.length; showSlide(cur); }, 3000);
 
-// Mobile menu
-document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('hidden'));
-document.querySelectorAll('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.add('hidden')));
+    // Irio slideshow
+    const irioSlides = document.querySelectorAll('.irio-slideshow img');
+    let irioCur = 0;
+    const showIrio = i => irioSlides.forEach((s, idx) => s.style.opacity = idx === i ? '1' : '0');
+    if (irioSlides.length) showIrio(0);
+    setInterval(() => { irioCur = (irioCur + 1) % irioSlides.length; showIrio(irioCur); }, 3000);
 
-// Back to top
-const btt=document.getElementById('backToTop');
-window.addEventListener('scroll',()=>{btt.style.display=window.scrollY>400?'flex':'none';});
-btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-window.addEventListener('scroll',()=>{document.getElementById('navbar').style.borderBottomColor=window.scrollY>50?'rgba(16,185,129,.15)':'rgba(255,255,255,.05)';});
-</script>
+    // App tabs
+    document.querySelectorAll('.app-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.app-panel').forEach(p => {
+          const show = p.id === 'app-' + tab.dataset.app;
+          p.classList.toggle('hidden', !show);
+          if (show) gsap.from(p, { opacity: 0, y: 14, duration: .4, ease: 'power2.out' });
+        });
+      });
+    });
+
+    // Lightbox
+    document.querySelectorAll('#photoGrid .photo-cell').forEach(cell => {
+      cell.addEventListener('click', () => {
+        const img = cell.querySelector('img');
+        if (!img || img.style.display === 'none') return;
+        document.getElementById('lightboxImg').src = img.src;
+        document.getElementById('lightbox').style.display = 'flex';
+      });
+    });
+    document.getElementById('closeLightbox').addEventListener('click', () => { document.getElementById('lightbox').style.display = 'none'; });
+    document.getElementById('lightbox').addEventListener('click', e => { if (e.target === document.getElementById('lightbox')) document.getElementById('lightbox').style.display = 'none'; });
+
+    // Mobile menu
+    document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('hidden'));
+    document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => document.getElementById('mobileMenu').classList.add('hidden')));
+
+    // Back to top
+    const btt = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => { btt.style.display = window.scrollY > 400 ? 'flex' : 'none'; });
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('scroll', () => { document.getElementById('navbar').style.borderBottomColor = window.scrollY > 50 ? 'rgba(16,185,129,.15)' : 'rgba(255,255,255,.05)'; });
+  </script>
 </body>
+
 </html>
